@@ -21,8 +21,9 @@
     "seed": "ts-node -r tsconfig-paths/register src/seeds/index.ts"
   },
   "dependencies": {
+    "@google/genai": "^2.17.1",
     "@nestjs/common": "^11.0.1",
-    "@nestjs/config": "^4.0.2",
+    "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mongoose": "^11.0.3",

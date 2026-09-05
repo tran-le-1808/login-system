@@ -10,6 +10,7 @@ import { ChatModule } from './chat/chat.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { join } from 'path';
+import { AIModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { join } from 'path';
     UsersModule,
     AuthModule,
     ChatModule,
+    AIModule,
   ],
   controllers: [AppController],
   providers: [AppService],

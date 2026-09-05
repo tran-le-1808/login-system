@@ -11,7 +11,6 @@ import { FilterQuery, Model } from 'mongoose';
 import {
   Conversation,
   ConversationDocument,
-  ParticipantSetting,
 } from './entities/conversation.entity';
 import {
   Message,
@@ -143,34 +142,58 @@ export class ChatService {
 
     const message = await this.messageModel.create({
       conversationId: conversation._id.toString(),
-
       senderId: data.senderId,
-
       text: data.text || '',
-
       type: messageType,
-
       attachments: data.attachments || [],
-
       replyTo: data.replyTo || null,
     });
 
-    const updatedParticipantsSettings: ParticipantSetting[] =
-      conversation.participantsSettings.map((setting: ParticipantSetting) => ({
-        ...setting,
+    const senderId = data.senderId.toString();
 
-        unreadCount:
-          setting.userId === data.senderId ? 0 : (setting.unreadCount || 0) + 1,
-      }));
+    const participantsSettings = conversation.participantsSettings || [];
 
-    await this.conversationModel.findByIdAndUpdate(conversation._id, {
-      lastMessage:
-        data.text || (data.attachments?.length ? '📎 Attachment' : ''),
+    const updatedParticipantsSettings = conversation.participants.map(
+      (userId) => {
+        const userIdString = userId.toString();
 
-      lastMessageAt: new Date(),
+        const existingSetting = participantsSettings.find(
+          (setting) => setting.userId.toString() === userIdString,
+        );
 
-      participantsSettings: updatedParticipantsSettings,
-    });
+        return {
+          userId: userIdString,
+          pinned: existingSetting?.pinned ?? false,
+          muted: existingSetting?.muted ?? false,
+          hidden: existingSetting?.hidden ?? false,
+          blocked: existingSetting?.blocked ?? false,
+          deleted: existingSetting?.deleted ?? false,
+          lastSeenAt: existingSetting?.lastSeenAt ?? null,
+
+          // Sender = 0
+          // Others = current unreadCount + 1
+          unreadCount:
+            userIdString === senderId
+              ? 0
+              : (existingSetting?.unreadCount ?? 0) + 1,
+        };
+      },
+    );
+
+    await this.conversationModel.findByIdAndUpdate(
+      conversation._id,
+      {
+        $set: {
+          lastMessage:
+            data.text || (data.attachments?.length ? '📎 Attachment' : ''),
+          lastMessageAt: new Date(),
+          participantsSettings: updatedParticipantsSettings,
+        },
+      },
+      {
+        new: true,
+      },
+    );
 
     const populatedMessage = await this.messageModel.findById(message._id);
 
@@ -180,7 +203,7 @@ export class ChatService {
 
     conversation.participants.forEach((userId) => {
       this.chatGateway.server.to(userId).emit('conversationUpdated', {
-        conversationId: conversation?._id,
+        conversationId: conversation._id.toString(),
       });
     });
 
@@ -196,13 +219,15 @@ export class ChatService {
     const skip = (data.page - 1) * data.limit;
 
     const query: Record<string, unknown> = {
-      participants: data.userId,
+      participants: {
+        $eq: data.userId,
+        $ne: 'AI_ASSISTANT',
+      },
     };
 
     if (data.search) {
       query.groupName = {
         $regex: data.search,
-
         $options: 'i',
       };
     }

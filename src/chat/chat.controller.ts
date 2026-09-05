@@ -48,15 +48,11 @@ export class ChatController {
   ) {
     return this.chatService.sendMessage({
       senderId: req.user._id,
-
-      receiverId: body.receiverId,
-
+      receiverId: body.receiverId || undefined,
+      conversationId: body.conversationId || undefined,
       text: body.text,
-
       type: body.type,
-
       replyTo: body.replyTo,
-
       attachments: files.map((file: Express.Multer.File) => ({
         url: `/uploads/${file.filename}`,
 
