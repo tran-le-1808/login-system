@@ -22,11 +22,12 @@ import {
 @WebSocketGateway({
   cors: {
     origin: '*',
+    credentials: true,
   },
 })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
-  server: Server;
+  server?: Server;
   private onlineUsers = new Map<string, string>();
 
   constructor(
@@ -72,9 +73,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       message: Message;
     },
   ) {
-    this.server.to(data.conversationId).emit('newMessage', data.message);
+    this.server?.to(data.conversationId).emit('newMessage', data.message);
 
-    this.server.to(data.receiverId).emit('newMessage', data.message);
+    this.server?.to(data.receiverId).emit('newMessage', data.message);
   }
 
   //
@@ -95,7 +96,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     await client.join(userId);
 
-    this.server.emit('userOnline', userId);
+    this.server?.emit('userOnline', userId);
 
     client.emit('onlineUsers', Array.from(this.onlineUsers.keys()));
   }

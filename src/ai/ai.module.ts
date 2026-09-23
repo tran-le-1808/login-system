@@ -15,9 +15,24 @@ import {
   ConversationSchema,
 } from 'src/chat/entities/conversation.entity';
 import { Message, MessageSchema } from 'src/chat/entities/message.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+
+      inject: [ConfigService],
+
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET'),
+
+        signOptions: {
+          expiresIn: '1d',
+        },
+      }),
+    }),
     MongooseModule.forFeature([
       {
         name: Conversation.name,

@@ -28,7 +28,6 @@ export class GeminiProvider implements AIProvider {
 
   constructor(private readonly configService: ConfigService) {
     this.apiKey = this.configService.get<string>('GEMINI_API_KEY') || '';
-
     this.model =
       this.configService.get<string>('GEMINI_MODEL') || 'gemini-2.5-flash';
   }
@@ -111,14 +110,15 @@ export class GeminiProvider implements AIProvider {
     await this.readGeminiStream(response.body, onChunk);
   }
 
+  /**
+   * Đọc Stream từ Gemini và phân tách thành từng từ/cụm ký tự để emit mượt hơn
+   */
   private async readGeminiStream(
     body: ReadableStream<Uint8Array>,
     onChunk: (chunk: string) => void,
   ): Promise<void> {
     const reader = body.getReader();
-
     const decoder = new TextDecoder();
-
     let buffer = '';
 
     while (true) {
@@ -128,12 +128,9 @@ export class GeminiProvider implements AIProvider {
         break;
       }
 
-      buffer += decoder.decode(value, {
-        stream: true,
-      });
+      buffer += decoder.decode(value, { stream: true });
 
       const lines = buffer.split('\n');
-
       buffer = lines.pop() ?? '';
 
       for (const line of lines) {
@@ -165,7 +162,13 @@ export class GeminiProvider implements AIProvider {
           const content = parts.map((part) => part.text ?? '').join('');
 
           if (content) {
-            onChunk(content);
+            // Tách thành từng khoảng trắng/từ để gửi mịn hơn thay vì dồn 1 cụm lớn
+            const tokens = content.match(/(\s+|\S+)/g) || [content];
+            for (const token of tokens) {
+              onChunk(token);
+              // Delay nhỏ 12ms giữa từng word để hiệu ứng gõ mịn mắt
+              await this.sleep(12);
+            }
           }
         } catch {
           // Ignore malformed SSE chunks
@@ -176,7 +179,6 @@ export class GeminiProvider implements AIProvider {
 
   private convertMessages(messages: AIMessage[]) {
     const systemMessage = messages.find((message) => message.role === 'system');
-
     const chatMessages = messages.filter(
       (message) => message.role !== 'system',
     );
@@ -184,22 +186,13 @@ export class GeminiProvider implements AIProvider {
     return {
       systemInstruction: systemMessage
         ? {
-            parts: [
-              {
-                text: systemMessage.content,
-              },
-            ],
+            parts: [{ text: systemMessage.content }],
           }
         : undefined,
 
       contents: chatMessages.map((message) => ({
         role: message.role === 'assistant' ? 'model' : 'user',
-
-        parts: [
-          {
-            text: message.content,
-          },
-        ],
+        parts: [{ text: message.content }],
       })),
     };
   }
@@ -224,7 +217,6 @@ export class GeminiProvider implements AIProvider {
       },
       body: JSON.stringify({
         ...converted,
-
         generationConfig: {
           temperature: options?.temperature ?? 0.7,
           maxOutputTokens: options?.maxTokens ?? 2048,
@@ -234,7 +226,6 @@ export class GeminiProvider implements AIProvider {
 
     if (!response.ok) {
       const errorText = await response.text();
-
       throw new InternalServerErrorException(`Gemini API error: ${errorText}`);
     }
 
@@ -253,7 +244,6 @@ export class GeminiProvider implements AIProvider {
     }
 
     const obj = value as Record<string, unknown>;
-
     return obj.candidates === undefined || Array.isArray(obj.candidates);
   }
 
@@ -269,19 +259,14 @@ export class GeminiProvider implements AIProvider {
     }
 
     try {
-      console.log(`[Gemini] Using model: ${this.model}`);
-
       await this.streamWithModel(this.model, messages, onChunk, options);
-
       return;
     } catch (error) {
       console.warn(`[Gemini] Primary model failed: ${this.model}`, error);
     }
 
     const fallbackModel = 'gemini-3.5-flash-lite';
-
     console.warn(`[Gemini] Falling back to: ${fallbackModel}`);
-
     await this.streamWithModel(fallbackModel, messages, onChunk, options);
   }
 }

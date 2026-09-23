@@ -198,11 +198,11 @@ export class ChatService {
     const populatedMessage = await this.messageModel.findById(message._id);
 
     this.chatGateway.server
-      .to(conversation._id.toString())
+      ?.to(conversation._id.toString())
       .emit('newMessage', populatedMessage);
 
     conversation.participants.forEach((userId) => {
-      this.chatGateway.server.to(userId).emit('conversationUpdated', {
+      this.chatGateway.server?.to(userId).emit('conversationUpdated', {
         conversationId: conversation._id.toString(),
       });
     });
