@@ -26,7 +26,7 @@ interface AIMessagePayload {
 
 @WebSocketGateway({
   cors: {
-    origin: '*',
+    origin: [process.env.WEB_URL],
     credentials: true,
   },
 })
