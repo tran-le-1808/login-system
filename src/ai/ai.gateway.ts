@@ -1,36 +1,38 @@
-// src/ai/ai.gateway.ts
-
 import {
   ConnectedSocket,
   MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayConnection,
 } from '@nestjs/websockets';
 import { JwtService } from '@nestjs/jwt';
 import { Server, Socket } from 'socket.io';
 import { AIService } from './ai.service';
-
-interface SocketData {
-  userId?: string;
-  user?: {
-    _id?: string;
-  };
-}
 
 interface AIMessagePayload {
   conversationId: string;
   content: string;
 }
 
+interface JwtPayload {
+  sub?: string;
+  _id?: string;
+  userId?: string;
+}
+
+interface SocketAuth {
+  token?: unknown;
+}
+
 @WebSocketGateway({
   cors: {
-    origin: [process.env.WEB_URL],
+    origin: [process.env.WEB_URL ?? ''],
     credentials: true,
   },
 })
-export class AIGateway implements OnGatewayConnection {
+export class AIGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;
 
@@ -39,67 +41,31 @@ export class AIGateway implements OnGatewayConnection {
     private readonly jwtService: JwtService,
   ) {}
 
-  /**
-   * Tự động chạy ngay khi Client khởi tạo kết nối Socket
-   */
-  async handleConnection(client: Socket) {
-    try {
-      let token = '';
-      // Trích xuất từ Cookie nếu chưa tìm thấy trong auth/header
-      if (typeof client.handshake.headers.cookie === 'string') {
-        const cookies = client.handshake.headers.cookie
-          .split(';')
-          .reduce<Record<string, string>>((acc, cookie) => {
-            const [key, value] = cookie.trim().split('=');
-            if (key && value) {
-              acc[key] = value;
-            }
-            return acc;
-          }, {});
+  handleConnection(client: Socket): void {
+    console.log(`[AIGateway] Connected: ${client.id}`);
+  }
 
-        token = cookies['token'];
-      }
-
-      if (!token) {
-        console.warn(
-          `[AIGateway] Connection rejected: Missing token (${client.id})`,
-        );
-        return;
-      }
-
-      const cleanToken = token.replace(/^Bearer\s+/i, '');
-      const decoded: unknown = await this.jwtService.verifyAsync(cleanToken);
-
-      // Cast sang interface mong muốn sau khi đã verify
-      const payload = decoded as {
-        sub?: string;
-        _id?: string;
-        userId?: string;
-      };
-      const userId = payload.sub || payload._id || payload.userId;
-
-      client.data = {
-        userId,
-        user: payload,
-      };
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Auth failed';
-      console.error(`[AIGateway] Auth Error (${client.id}):`, errorMessage);
-    }
+  handleDisconnect(client: Socket): void {
+    console.log(`[AIGateway] Disconnected: ${client.id}`);
   }
 
   @SubscribeMessage('aiMessage')
   async handleAIMessage(
     @ConnectedSocket() client: Socket,
     @MessageBody() payload: AIMessagePayload,
-  ) {
-    console.log(12345, client.data);
+  ): Promise<void> {
+    console.log('[AIGateway] aiMessage received:', client.id);
+    console.log('[AIGateway] auth:', client.handshake.auth);
+    console.log('[AIGateway] payload:', payload);
+
     try {
-      const userId = this.getUserId(client);
+      const userId = await this.getUserId(client);
+      console.log('🚀 ~ AIGateway ~ handleAIMessage ~ userId:', userId);
 
       if (!userId) {
-        client.emit('aiMessageError', { message: 'Unauthorized' });
+        client.emit('aiMessageError', {
+          message: 'Unauthorized',
+        });
         return;
       }
 
@@ -112,37 +78,30 @@ export class AIGateway implements OnGatewayConnection {
         return;
       }
 
-      // Phát sự kiện bắt đầu ngay lập tức
-      client.emit('aiMessageStart', { conversationId });
+      client.emit('aiMessageStart', {
+        conversationId,
+      });
 
-      // Thực hiện stream
       const savedAiMessage = await this.aiService.streamMessage(
         userId,
         conversationId,
         content.trim(),
-        (chunk) => {
+        (chunk: string) => {
           client.emit('aiMessageChunk', {
             conversationId,
             chunk,
           });
         },
       );
-      console.log(
-        '🚀 ~ AIGateway ~ handleAIMessage ~ savedAiMessage:',
-        savedAiMessage,
-      );
-      console.log(
-        '🚀 ~ AIGateway ~ handleAIMessage ~ conversationId:',
-        conversationId,
-      );
 
-      // Phát sự kiện hoàn thành kèm tin nhắn đã tạo trong DB
+      console.log('[AIGateway] AI message completed:', conversationId);
+
       client.emit('aiMessageComplete', {
         conversationId,
         message: savedAiMessage,
       });
     } catch (error: unknown) {
-      console.error('AI message error:', error);
+      console.error('[AIGateway] AI message error:', error);
 
       const message =
         error instanceof Error ? error.message : 'AI request failed';
@@ -154,8 +113,32 @@ export class AIGateway implements OnGatewayConnection {
     }
   }
 
-  private getUserId(client: Socket): string | null {
-    const data = client.data as SocketData;
-    return data.userId ?? data.user?._id ?? null;
+  private async getUserId(client: Socket): Promise<string | null> {
+    const auth = client.handshake.auth as SocketAuth;
+
+    if (typeof auth.token !== 'string' || !auth.token) {
+      return null;
+    }
+
+    const token = auth.token.replace(/^Bearer\s+/i, '');
+
+    try {
+      const decoded: unknown = await this.jwtService.verifyAsync(token);
+
+      if (typeof decoded !== 'object' || decoded === null) {
+        return null;
+      }
+
+      const payload = decoded as JwtPayload;
+
+      return payload.sub ?? payload._id ?? payload.userId ?? null;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'JWT verification failed';
+
+      console.error('[AIGateway] JWT verification error:', message);
+
+      return null;
+    }
   }
 }
