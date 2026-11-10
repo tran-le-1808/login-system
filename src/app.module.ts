@@ -11,6 +11,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { join } from 'path';
 import { AIModule } from './ai/ai.module';
+import { MonopolyModule } from './monopoly/monopoly.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AIModule } from './ai/ai.module';
     AuthModule,
     ChatModule,
     AIModule,
+    MonopolyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

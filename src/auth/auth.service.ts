@@ -11,6 +11,9 @@ import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
 import { comparePasswords, hashPassword } from 'src/helpers/bcrypt.helper';
 import { ConfigService } from '@nestjs/config';
+import { User, UserDocument } from 'src/users/entities/user.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +21,8 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    @InjectModel(User.name)
+    private readonly userModel: Model<UserDocument>,
   ) {}
 
   async register(data: RegisterDto) {
@@ -77,5 +82,10 @@ export class AuthService {
       token,
       refreshToken,
     };
+  }
+
+  async getProfile(id: string): Promise<UserDocument | null> {
+    const res = await this.userModel.findById(id).exec();
+    return res;
   }
 }
