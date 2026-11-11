@@ -98,6 +98,7 @@ export class MonopolyRoomService {
       players: [],
       snapshot: null,
       chat: [],
+      voice: {},
       createdAt: Date.now(),
     };
     this.rooms.set(code, room);

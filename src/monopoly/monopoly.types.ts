@@ -39,6 +39,8 @@ export interface Room {
   /** Trạng thái game mới nhất do host gửi lên (để rejoin / chuyển host) */
   snapshot: unknown;
   chat: RoomChatMessage[];
+  /** Voice chat: những người đang bật voice (userId -> đang tắt mic hay không) */
+  voice: Record<string, { muted: boolean }>;
   createdAt: number;
 }
 

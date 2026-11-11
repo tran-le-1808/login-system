@@ -112,6 +112,28 @@ export class MonopolyGateway implements OnGatewayDisconnect {
     this.server.to(roomKey(room.code)).emit('mono:notice', { text });
   }
 
+  // ===================== VOICE =====================
+  private voiceUsers(room: Room) {
+    return Object.entries(room.voice).map(([userId, v]) => ({
+      userId,
+      muted: v.muted,
+    }));
+  }
+
+  private broadcastVoice(room: Room) {
+    this.server
+      .to(roomKey(room.code))
+      .emit('mono:voice:users', { users: this.voiceUsers(room) });
+  }
+
+  /** Bỏ 1 người khỏi voice (rời voice / mất kết nối / rời phòng) */
+  private leaveVoice(room: Room, userId: string) {
+    if (!room.voice[userId]) return;
+    delete room.voice[userId];
+    this.server.to(roomKey(room.code)).emit('mono:voice:left', { userId });
+    this.broadcastVoice(room);
+  }
+
   private hostSocketId(room: Room): string | null {
     return this.rooms.findPlayer(room, room.hostId)?.socketId ?? null;
   }
@@ -147,6 +169,7 @@ export class MonopolyGateway implements OnGatewayDisconnect {
     if (!player) return;
 
     const wasHost = room.hostId === userId;
+    this.leaveVoice(room, userId);
     if (player.socketId) {
       this.server.in(player.socketId).socketsLeave(roomKey(room.code));
     }
@@ -178,6 +201,8 @@ export class MonopolyGateway implements OnGatewayDisconnect {
 
     player.connected = false;
     player.socketId = null;
+    // Mất kết nối -> rời voice (client tự vào lại khi kết nối lại)
+    this.leaveVoice(room, user.userId);
 
     // Trong trận: host mất kết nối -> chuyển host ngay để trận đấu không bị treo
     if (room.status === 'playing' && room.hostId === user.userId) {
@@ -322,6 +347,10 @@ export class MonopolyGateway implements OnGatewayDisconnect {
     const room = this.rooms.getRoomOfUser(user.userId);
     if (!room || room.hostId !== user.userId) {
       return { ok: false, error: 'Chỉ chủ phòng mới được kick' };
+    }
+    // Chỉ được kick khi đang ở phòng chờ, trận đã bắt đầu thì không
+    if (room.status !== 'lobby') {
+      return { ok: false, error: 'Không thể kick khi trận đấu đã bắt đầu' };
     }
     const targetId = body?.userId;
     if (!targetId || targetId === user.userId) {
@@ -520,6 +549,80 @@ export class MonopolyGateway implements OnGatewayDisconnect {
       type: body.type,
       payload: body.payload,
     });
+    return { ok: true };
+  }
+
+  // =====================================================
+  // VOICE CHAT (WebRTC mesh — server chỉ chuyển tín hiệu)
+  // =====================================================
+
+  /** Bật voice: trả về những người đang trong voice để người mới gửi offer tới họ */
+  @SubscribeMessage('mono:voice:join')
+  async handleVoiceJoin(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { muted?: boolean },
+  ): Promise<AckResponse<{ peers: string[] }>> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room || !this.rooms.findPlayer(room, user.userId))
+      return { ok: false };
+    const peers = Object.keys(room.voice).filter((id) => id !== user.userId);
+    room.voice[user.userId] = { muted: !!body?.muted };
+    this.broadcastVoice(room);
+    return { ok: true, data: { peers } };
+  }
+
+  @SubscribeMessage('mono:voice:leave')
+  async handleVoiceLeave(
+    @ConnectedSocket() client: Socket,
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room) return { ok: false };
+    this.leaveVoice(room, user.userId);
+    return { ok: true };
+  }
+
+  /** Bật / tắt mic (để mọi người thấy biểu tượng 🔇) */
+  @SubscribeMessage('mono:voice:mute')
+  async handleVoiceMute(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { muted?: boolean },
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room || !room.voice[user.userId]) return { ok: false };
+    room.voice[user.userId].muted = !!body?.muted;
+    this.broadcastVoice(room);
+    return { ok: true };
+  }
+
+  /** Danh sách người đang bật voice (khi vừa vào phòng) */
+  @SubscribeMessage('mono:voice:list')
+  async handleVoiceList(
+    @ConnectedSocket() client: Socket,
+  ): Promise<AckResponse<{ users: { userId: string; muted: boolean }[] }>> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room) return { ok: false };
+    return { ok: true, data: { users: this.voiceUsers(room) } };
+  }
+
+  /** Chuyển tín hiệu WebRTC (offer / answer / ICE) tới đúng 1 người trong cùng phòng */
+  @SubscribeMessage('mono:voice:signal')
+  async handleVoiceSignal(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { to?: string; data?: unknown },
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room || typeof body?.to !== 'string') return { ok: false };
+    if (!room.voice[user.userId] || !room.voice[body.to]) return { ok: false };
+    const target = this.rooms.findPlayer(room, body.to);
+    if (!target?.socketId) return { ok: false };
+    this.server
+      .to(target.socketId)
+      .emit('mono:voice:signal', { from: user.userId, data: body.data });
     return { ok: true };
   }
 }
