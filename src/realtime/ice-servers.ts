@@ -4,6 +4,10 @@
  *   TURN_URLS        (tuỳ chọn, vd. "turn:turn.example.com:3478,turns:turn.example.com:5349")
  *   TURN_USERNAME    / TURN_CREDENTIAL
  * Không đặt TURN credential ở frontend.
+ *
+ * Ví dụ ExpressTURN (gói miễn phí):
+ *   TURN_URLS=turn:free.expressturn.com:3478,turn:free.expressturn.com:3478?transport=tcp
+ *   TURN_USERNAME / TURN_CREDENTIAL lấy trong trang quản lý ExpressTURN
  */
 export interface IceServerConfig {
   urls: string[];
