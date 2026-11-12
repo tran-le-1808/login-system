@@ -12,6 +12,7 @@ import { Model } from 'mongoose';
 import { Server, Socket } from 'socket.io';
 import { User, UserDocument } from 'src/users/entities/user.entity';
 import { MonopolyRoomService } from './monopoly-room.service';
+import { getIceServers } from '../realtime/ice-servers';
 import {
   AckResponse,
   MONOPOLY_MAX_PLAYERS,
@@ -555,6 +556,16 @@ export class MonopolyGateway implements OnGatewayDisconnect {
   // =====================================================
   // VOICE CHAT (WebRTC mesh — server chỉ chuyển tín hiệu)
   // =====================================================
+
+  /** Cấu hình STUN / TURN (lấy từ biến môi trường của server, không để ở frontend) */
+  @SubscribeMessage('mono:voice:config')
+  async handleVoiceConfig(
+    @ConnectedSocket() client: Socket,
+  ): Promise<AckResponse<{ iceServers: ReturnType<typeof getIceServers> }>> {
+    const user = await this.getUser(client);
+    if (!user) return { ok: false, error: 'Bạn cần đăng nhập' };
+    return { ok: true, data: { iceServers: getIceServers() } };
+  }
 
   /** Bật voice: trả về những người đang trong voice để người mới gửi offer tới họ */
   @SubscribeMessage('mono:voice:join')
