@@ -7,25 +7,19 @@ import {
 
 import { FilesInterceptor } from '@nestjs/platform-express';
 
-import { diskStorage } from 'multer';
+import { memoryStorage } from 'multer';
 
+/**
+ * Nhận tệp vào bộ nhớ (buffer) rồi controller đẩy thẳng lên Cloudinary.
+ * Không ghi ra ổ đĩa: ổ đĩa của server (Render…) bị xoá mỗi lần deploy.
+ */
 export function UploadFilesInterceptor(
   fieldName = 'files',
   maxCount = 10,
 ): Type<NestInterceptor> {
   return mixin(
     FilesInterceptor(fieldName, maxCount, {
-      storage: diskStorage({
-        destination: './uploads',
-
-        filename: (req, file, callback) => {
-          const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-
-          const extension = file.originalname.split('.').pop();
-
-          callback(null, `${uniqueName}.${extension}`);
-        },
-      }),
+      storage: memoryStorage(),
 
       limits: {
         fileSize: 1024 * 1024 * 50, // 50MB

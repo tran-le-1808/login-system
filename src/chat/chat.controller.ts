@@ -1,6 +1,8 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Logger,
   Get,
   Param,
   Post,
@@ -16,6 +18,11 @@ import { MessageType } from './entities/message.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import type { RequestWithUser } from 'src/auth/interfaces/request-with-user.interface';
 import { UploadFilesInterceptor } from 'src/interceptor/upload.interceptor';
+import { CloudinaryService } from 'src/common/cloudinary/cloudinary.service';
+
+/** Giới hạn của Cloudinary (gói miễn phí): ảnh / tài liệu 10MB, video 100MB */
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 50 * 1024 * 1024;
 
 export interface SendMessageBody {
   senderId: string;
@@ -34,7 +41,51 @@ export interface SendMessageBody {
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
 export class ChatController {
-  constructor(private readonly chatService: ChatService) {}
+  private readonly logger = new Logger(ChatController.name);
+
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
+
+  /** Đẩy các tệp đính kèm lên Cloudinary, trả về danh sách attachment để lưu vào tin nhắn */
+  private async uploadAttachments(files: Express.Multer.File[] = []) {
+    for (const f of files) {
+      const isVideo = f.mimetype.startsWith('video/');
+      const max = isVideo ? MAX_VIDEO_BYTES : MAX_FILE_BYTES;
+      if (f.size > max) {
+        throw new BadRequestException(
+          `Tệp "${f.originalname}" vượt quá ${max / 1024 / 1024}MB`,
+        );
+      }
+    }
+    try {
+      return await Promise.all(
+        files.map(async (file) => {
+          const uploaded = await this.cloudinaryService.uploadChatFile(file);
+          // PDF / ZIP: phát qua route tải có chữ ký (đường dẫn tương đối, frontend tự ghép API URL)
+          const url =
+            uploaded.resource_type === 'raw' &&
+            CloudinaryService.needsSignedDelivery(uploaded.public_id)
+              ? `/chat/files?id=${encodeURIComponent(uploaded.public_id)}`
+              : uploaded.secure_url;
+          return {
+            url,
+            name: file.originalname,
+            type: file.mimetype,
+            size: file.size,
+          };
+        }),
+      );
+    } catch (err) {
+      this.logger.error(
+        `Upload Cloudinary thất bại: ${err instanceof Error ? err.message : String(err)}`,
+      );
+      throw new BadRequestException(
+        'Không tải được tệp lên Cloudinary, vui lòng thử lại',
+      );
+    }
+  }
 
   @Post('send-message')
   @UseInterceptors(UploadFilesInterceptor())
@@ -53,15 +104,7 @@ export class ChatController {
       text: body.text,
       type: body.type,
       replyTo: body.replyTo,
-      attachments: files.map((file: Express.Multer.File) => ({
-        url: `/uploads/${file.filename}`,
-
-        name: file.originalname,
-
-        type: file.mimetype,
-
-        size: file.size,
-      })),
+      attachments: await this.uploadAttachments(files),
     });
   }
 
