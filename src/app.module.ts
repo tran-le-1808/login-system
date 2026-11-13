@@ -13,6 +13,7 @@ import { join } from 'path';
 import { AIModule } from './ai/ai.module';
 import { MonopolyModule } from './monopoly/monopoly.module';
 import { BilliardModule } from './billiard/billiard.module';
+import { PoolModule } from './pool/pool.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { BilliardModule } from './billiard/billiard.module';
     AIModule,
     MonopolyModule,
     BilliardModule,
+    PoolModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -65,6 +65,21 @@ export function sanitizeShot(
   };
 }
 
+/**
+ * SWERVE (bi chạy cong do đánh lệch ngang khi nâng cơ) chỉ có từ MASSE_START_DEG, tăng mượt tới MASSE_FULL_DEG
+ * (massé thật sự). Cú đánh thường / cơ chỉ nâng nhẹ thì bi đi THẲNG theo hướng ngắm: quỹ đạo không phụ thuộc lực.
+ */
+export const MASSE_START_DEG = 8;
+export const MASSE_FULL_DEG = 15;
+export function masseGate(elevationDeg: number): number {
+  const t = clamp(
+    (elevationDeg - MASSE_START_DEG) / (MASSE_FULL_DEG - MASSE_START_DEG),
+    0,
+    1,
+  );
+  return t * t * (3 - 2 * t);
+}
+
 /** Kết quả chi tiết của cú đánh (để kiểm chứng định luật & debug) */
 export interface StrikeResult {
   /** Điểm chạm đầu cơ (vector từ tâm bi) */
@@ -133,6 +148,20 @@ export function computeCueStrike(
     y: w0.y + tq.y / I,
     z: w0.z + tq.z / I,
   };
+
+  // Đánh lệch ngang + nâng cơ làm trục xoáy nghiêng về phía trước (thành phần ω dọc hướng đi) -> bi chạy cong
+  // và độ cong đổi theo lực. Bỏ thành phần do cú đánh gây ra khi cơ chưa đủ dốc để massé: bi đi thẳng.
+  const gate = masseGate(shot.elevation);
+  if (gate < 1) {
+    const hh = Math.sqrt(d.x * d.x + d.y * d.y);
+    if (hh > 1e-9) {
+      const hx = d.x / hh;
+      const hy = d.y / hh;
+      const along = (w.x - w0.x) * hx + (w.y - w0.y) * hy;
+      w.x -= (1 - gate) * along * hx;
+      w.y -= (1 - gate) * along * hy;
+    }
+  }
 
   // 2. Phản lực mặt bàn & 3. ma sát lúc bi bị kẹp
   const N = Math.max(0, -P.z);

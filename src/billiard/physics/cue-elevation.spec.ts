@@ -117,6 +117,29 @@ describe('Masse / swerve: góc nâng + side spin', () => {
     return { y: r.final[0][1], cushions };
   };
 
+  it('góc ≤ 8° (kể cả góc mặc định 5°): bi đi THẲNG theo hướng ngắm ở mọi lực, dù đánh lệch ngang', () => {
+    for (const el of [0, 5, 8]) {
+      for (const tipX of [-0.8, 0.8]) {
+        for (const power of [0.1, 0.3, 0.6, 1]) {
+          const r = simulateShot(
+            lone(-1.2),
+            shot({ elevation: el, tipX, tipY: 0.4, power }),
+            C,
+            { recordFrames: true },
+          );
+          // Tại mọi thời điểm trước khi chạm băng bi nằm đúng trên trục x (đường ngắm): không lệch ngang, bất kể lực
+          const cushion = r.events.find((e) => e.type === 'cushion');
+          const frames = r.frames.filter(
+            (f) => !cushion || f.t < cushion.t - 0.01,
+          );
+          expect(frames.length).toBeGreaterThan(2);
+          for (const f of frames)
+            expect(Math.abs(f.balls[0][1])).toBeLessThan(1e-9);
+        }
+      }
+    }
+  });
+
   it('0°: side spin KHÔNG làm bi cong trên mặt vải phẳng', () => {
     expect(Math.abs(deviation(0, 0.8).y)).toBeLessThan(1e-9);
   });
