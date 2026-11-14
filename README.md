@@ -96,3 +96,45 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+---
+
+## Chat: trả lời · sửa · xoá · thu hồi · tìm kiếm
+
+API (đều yêu cầu JWT và kiểm tra người dùng thuộc hội thoại):
+
+| Phương thức | Đường dẫn | Ý nghĩa |
+|---|---|---|
+| POST | `/chat/send-message` | Gửi tin; nhận thêm `replyTo`, `clientId` (gửi lặp cùng `clientId` không tạo tin trùng) |
+| GET | `/chat/messages/:conversationId?before=&around=&limit=` | Danh sách tin; `around=<id tin>` trả cửa sổ quanh tin đó. Tự ẩn tin tôi đã "xoá ở phía bạn" |
+| PATCH | `/chat/messages/:id` `{ text }` | Chỉnh sửa (chỉ người gửi, tin có chữ, trong `EDIT_WINDOW_MINUTES`) |
+| DELETE | `/chat/messages/:id?scope=me` | Xoá ở phía tôi (chỉ ẩn khỏi tài khoản của tôi) |
+| DELETE | `/chat/messages/:id?scope=all` | Thu hồi với mọi người (xoá thật nội dung, chỉ mục tìm kiếm, tệp đính kèm) |
+| GET | `/chat/search/messages?q=&conversationId=&senderId=&type=&from=&to=&cursor=` | Tìm tin không phân biệt dấu tiếng Việt |
+
+Sự kiện realtime (Socket.IO): `newMessage`, `messageEdited`, `messageRecalled` (vào phòng hội thoại), `messageDeletedForMe` (chỉ các thiết bị của chính người xoá, qua phòng `userId`), `conversationUpdated`.
+
+Biến môi trường (tuỳ chọn):
+
+| Biến | Mặc định | Ý nghĩa |
+|---|---|---|
+| `EDIT_WINDOW_MINUTES` | `15` | Thời hạn được sửa tin; `0` = không giới hạn |
+| `RECALL_WINDOW_MINUTES` | `0` | Thời hạn được thu hồi; `0` = không giới hạn |
+
+(Frontend: `NEXT_PUBLIC_EDIT_WINDOW_MINUTES`, mặc định 15 — chỉ để ẩn nút Chỉnh sửa; máy chủ mới là nơi quyết định.)
+
+### Migration dữ liệu cũ
+
+Tin nhắn mới có thêm `seq` (số thứ tự theo hội thoại), `searchText` (nội dung không dấu để tìm kiếm), `clientId`, `editedAt`, `recalledAt`, `deletedFor`; hội thoại có `lastSeq`. Tin cũ **vẫn hiển thị bình thường** nhưng chưa tìm kiếm được cho tới khi chạy script bổ sung dữ liệu:
+
+```bash
+npm run chat:backfill -- --dry-run   # chạy thử, không ghi
+npm run chat:backfill                # điền seq, lastSeq, searchText (chạy lại nhiều lần an toàn)
+npm run chat:backfill -- --rollback  # gỡ seq, lastSeq, searchText
+```
+
+### Chạy test
+
+```bash
+npx jest src/chat        # quy tắc sửa/thu hồi, chuẩn hoá tiếng Việt, ChatService (mô hình giả)
+```

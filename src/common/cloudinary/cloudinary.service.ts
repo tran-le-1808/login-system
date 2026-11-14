@@ -132,4 +132,41 @@ export class CloudinaryService {
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }
+
+  /**
+   * Xoá tệp đính kèm khỏi Cloudinary (thu hồi tin nhắn). Suy public_id & loại tài nguyên từ URL
+   * đã lưu: link Cloudinary trực tiếp hoặc route `/chat/files?id=...` (PDF/ZIP). Chỉ xoá trong
+   * thư mục tin nhắn. Trả về true nếu đã gửi lệnh xoá; không ném lỗi (làm nền, có log).
+   */
+  async destroyChatAttachment(url: string): Promise<boolean> {
+    let publicId: string | null = null;
+    let resourceType = 'image' as 'image' | 'video' | 'raw';
+    const viaRoute = url.match(/\/chat\/files\?id=([^&]+)/);
+    if (viaRoute) {
+      publicId = decodeURIComponent(viaRoute[1]);
+      resourceType = 'raw';
+    } else {
+      const m = url.match(
+        /\/(image|video|raw)\/upload\/(?:v\d+\/)?(chat-zone\/messages\/[^?#]+)/,
+      );
+      if (m) {
+        resourceType = m[1] as typeof resourceType;
+        publicId = decodeURIComponent(m[2]);
+        // image / video: public_id không kèm phần mở rộng; raw: có
+        if (resourceType !== 'raw')
+          publicId = publicId.replace(/\.[A-Za-z0-9]+$/, '');
+      }
+    }
+    if (!publicId || !publicId.startsWith(CloudinaryService.CHAT_FOLDER + '/'))
+      return false;
+    try {
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: resourceType,
+        invalidate: true,
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }

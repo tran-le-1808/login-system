@@ -64,6 +64,10 @@ export const ParticipantSettingSchema =
   timestamps: true,
 })
 export class Conversation {
+  /** Số thứ tự của tin cuối trong hội thoại (cấp seq cho tin mới) */
+  @Prop({ type: Number, default: 0 })
+  lastSeq!: number;
+
   // USERS
   @Prop({
     type: [String],

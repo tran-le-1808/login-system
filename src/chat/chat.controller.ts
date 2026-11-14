@@ -2,9 +2,11 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Logger,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -36,6 +38,9 @@ export interface SendMessageBody {
   type?: MessageType;
 
   replyTo?: string;
+
+  /** Khoá chống gửi trùng do client sinh */
+  clientId?: string;
 }
 
 @Controller('chat')
@@ -98,12 +103,13 @@ export class ChatController {
     body: SendMessageBody,
   ) {
     return this.chatService.sendMessage({
-      senderId: req.user._id,
+      senderId: String(req.user._id),
       receiverId: body.receiverId || undefined,
       conversationId: body.conversationId || undefined,
       text: body.text,
       type: body.type,
-      replyTo: body.replyTo,
+      replyTo: body.replyTo || undefined,
+      clientId: body.clientId || undefined,
       attachments: await this.uploadAttachments(files),
     });
   }
@@ -128,15 +134,88 @@ export class ChatController {
 
   @Get('messages/:conversationId')
   async getMessages(
+    @Req() req: RequestWithUser,
     @Param('conversationId') conversationId: string,
     @Query('limit') limit?: string,
     @Query('before') before?: string,
+    @Query('around') around?: string,
   ) {
     return this.chatService.getMessages(
       conversationId,
       limit ? Number(limit) : 20,
       before,
+      String(req.user._id),
+      around,
     );
+  }
+
+  /** Sửa nội dung tin (chỉ người gửi, tin chữ, trong EDIT_WINDOW_MINUTES) */
+  @Patch('messages/:id')
+  async editMessage(
+    @Req() req: RequestWithUser,
+    @Param('id') id: string,
+    @Body() body: { text?: string },
+  ) {
+    return this.chatService.editMessage(
+      String(req.user._id),
+      id,
+      body?.text ?? '',
+    );
+  }
+
+  /** scope=me: xoá ở phía tôi · scope=all: thu hồi với mọi người (chỉ người gửi) */
+  @Delete('messages/:id')
+  async deleteMessage(
+    @Req() req: RequestWithUser,
+    @Param('id') id: string,
+    @Query('scope') scope?: string,
+  ) {
+    if (scope === 'all')
+      return this.chatService.recallMessage(String(req.user._id), id);
+    if (scope === 'me')
+      return this.chatService.deleteForMe(String(req.user._id), id);
+    throw new BadRequestException('scope phải là "me" hoặc "all"');
+  }
+
+  /** Ảnh đã chia sẻ trong hội thoại (mới nhất trước), phân trang theo offset */
+  @Get('conversations/:id/media')
+  async getMedia(
+    @Req() req: RequestWithUser,
+    @Param('id') id: string,
+    @Query('kind') kind = 'image',
+    @Query('offset') offset?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.chatService.getMedia(String(req.user._id), id, {
+      kind: kind === 'file' ? 'file' : 'image',
+      offset: offset ? Number(offset) : 0,
+      limit: limit ? Number(limit) : 5,
+    });
+  }
+
+  /** Tìm tin nhắn không phân biệt dấu (chỉ trong hội thoại của tôi) */
+  @Get('search/messages')
+  async searchMessages(
+    @Req() req: RequestWithUser,
+    @Query('q') q = '',
+    @Query('conversationId') conversationId?: string,
+    @Query('senderId') senderId?: string,
+    @Query('type') type?: string,
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('cursor') cursor?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.chatService.searchMessages(String(req.user._id), {
+      q,
+      conversationId,
+      senderId,
+      type,
+      from,
+      to,
+      cursor,
+      limit: limit ? Number(limit) : undefined,
+    });
   }
 
   @Post('create-group')
