@@ -6,3 +6,4 @@ export * from './world';
 export * from './rules';
 export { resolveBallBall, resolveBallCushion, railGap } from './collisions';
 export { applyClothFriction } from './cloth';
+export * from './table';

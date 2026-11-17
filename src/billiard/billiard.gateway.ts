@@ -3,6 +3,7 @@ import {
   ConnectedSocket,
   MessageBody,
   OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -24,6 +25,22 @@ import {
   RoomSettings,
 } from './billiard.types';
 import { getIceServers } from '../realtime/ice-servers';
+import { checkPassword } from './billiard-room.service';
+import {
+  CreateRoomDto,
+  JoinRoomDto,
+  RoomListDto,
+  validateDto,
+} from './lobby/dto/lobby.dto';
+import { BilliardEventsService, userRoomKey } from './lobby/events.service';
+import {
+  BilliardMatchFlowService,
+  type FinishOutcome,
+} from './lobby/match-flow.service';
+import { RANKING_CONFIG, ruleSetById } from './lobby/ranking.config';
+import { BilliardTournamentService } from './lobby/tournament.service';
+import type { BracketMatch } from './lobby/bracket';
+import type { RoomKind } from './billiard.types';
 
 /** Thời gian chờ người chơi kết nối lại trước khi bị xoá khỏi phòng */
 const LOBBY_RECONNECT_GRACE_MS = 15_000;
@@ -34,7 +51,7 @@ const SHOT_MIN_INTERVAL_MS = 400;
 const CHAT_WINDOW_MS = 5000;
 const CHAT_MAX_IN_WINDOW = 6;
 
-interface SocketUser {
+export interface SocketUser {
   userId: string;
   name: string;
   avatar?: string;
@@ -60,7 +77,7 @@ const roomKey = (code: string) => `bida:${code}`;
     credentials: true,
   },
 })
-export class BilliardGateway implements OnGatewayDisconnect {
+export class BilliardGateway implements OnGatewayDisconnect, OnGatewayInit {
   @WebSocketServer()
   server!: Server;
 
@@ -70,11 +87,206 @@ export class BilliardGateway implements OnGatewayDisconnect {
   private lastShotAt = new Map<string, number>();
   private chatTimes = new Map<string, number[]>();
 
+  /** Hẹn giờ "không vào trận" của phòng ghép trận / giải đấu */
+  private noShowTimers = new Map<string, NodeJS.Timeout>();
+
+  /** Gateway sảnh gắn vào: người đang tìm / chờ xác nhận trận ghép thì không được tạo phòng */
+  matchmakingBusy: (userId: string) => string | null = () => null;
+
   constructor(
     private readonly rooms: BilliardRoomService,
     private readonly jwtService: JwtService,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly flow: BilliardMatchFlowService,
+    private readonly tournaments: BilliardTournamentService,
+    private readonly events: BilliardEventsService,
   ) {}
+
+  afterInit(server: Server) {
+    this.events.attach(server);
+  }
+
+  /** Xác thực socket (dùng chung cho gateway sảnh) */
+  authUser(client: Socket): Promise<SocketUser | null> {
+    return this.getUser(client);
+  }
+
+  // =====================================================
+  // TRẬN GHÉP / GIẢI ĐẤU
+  // =====================================================
+  /**
+   * Mở phòng cho một trận ghép tự động / giải đấu và báo cho đúng 2 người.
+   * Đủ 2 người vào phòng -> tự bắt đầu; quá hạn mà vắng -> người vắng bị xử thua (hoặc huỷ nếu cả hai vắng).
+   */
+  openMatchRoom(
+    kind: Exclude<RoomKind, 'casual'>,
+    users: { userId: string; name: string; avatar?: string }[],
+    ruleSetId: string,
+    meta: {
+      matchId: string;
+      tournamentId?: string | null;
+      tournamentMatchId?: string | null;
+    },
+  ): Room {
+    const rule =
+      ruleSetById(ruleSetId) ??
+      ruleSetById(RANKING_CONFIG.matchmaking.rankedRuleSets.three[0])!;
+    const deadline =
+      Date.now() + RANKING_CONFIG.matchmaking.noShowSeconds * 1000;
+    const room = this.rooms.createMatchRoom(kind, users, rule, {
+      matchId: meta.matchId,
+      ruleSet: rule.id,
+      tournamentId: meta.tournamentId ?? null,
+      tournamentMatchId: meta.tournamentMatchId ?? null,
+      joinDeadline: deadline,
+    });
+    this.noShowTimers.set(
+      room.code,
+      setTimeout(
+        () => void this.resolveNoShow(room.code),
+        deadline - Date.now(),
+      ),
+    );
+    this.events.toUsers(
+      users.map((u) => u.userId),
+      'bida:match:ready',
+      {
+        code: room.code,
+        kind,
+        ruleSet: rule.id,
+        matchId: meta.matchId,
+        tournamentId: meta.tournamentId ?? null,
+        joinDeadline: deadline,
+      },
+    );
+    this.logger.log(
+      `[${room.code}] Mở phòng trận ${kind} ${users.map((u) => u.name).join(' vs ')}`,
+    );
+    return room;
+  }
+
+  /** Mở phòng cho các trận giải đấu vừa sẵn sàng */
+  async openTournamentMatches(
+    list: { tournamentId: string; match: BracketMatch }[],
+  ): Promise<void> {
+    for (const { tournamentId, match } of list) {
+      if (!match.playerA || !match.playerB) continue;
+      const t = await this.tournaments.get(tournamentId);
+      if (!t) continue;
+      const users = [match.playerA, match.playerB].map((id) => {
+        const p = t.participants.find((x) => x.userId === id);
+        return { userId: id, name: p?.name ?? 'Người chơi', avatar: p?.avatar };
+      });
+      // người chơi đang bận trận khác (hiếm): để lần quét sau
+      if (
+        users.some(
+          (u) => this.rooms.getRoomOfUser(u.userId)?.status === 'playing',
+        )
+      )
+        continue;
+      const matchId = `t-${tournamentId}-${match.id}`;
+      const room = this.openMatchRoom('tournament', users, t.ruleSet, {
+        matchId,
+        tournamentId,
+        tournamentMatchId: match.id,
+      });
+      const ok = await this.tournaments.assignRoom(
+        tournamentId,
+        match.id,
+        room.code,
+      );
+      if (!ok.ok) {
+        this.clearNoShow(room.code);
+        this.rooms.closeRoom(room);
+      }
+    }
+  }
+
+  private clearNoShow(code: string) {
+    const t = this.noShowTimers.get(code);
+    if (t) clearTimeout(t);
+    this.noShowTimers.delete(code);
+  }
+
+  /** Bắt đầu trận ghép khi cả hai đã vào phòng */
+  private autoStartIfReady(room: Room) {
+    if (room.kind === 'casual' || room.status !== 'lobby') return;
+    if (room.players.length < 2 || room.players.some((p) => !p.connected))
+      return;
+    this.clearNoShow(room.code);
+    this.rooms.startGame(room);
+    this.notice(room, '🎱 Trận đấu bắt đầu! Bi trắng khai cuộc');
+    this.broadcastRoom(room);
+    this.broadcastGame(room);
+    this.scheduleTurnTimer(room);
+    void this.flow
+      .onStarted(room)
+      .catch((e: Error) =>
+        this.logger.error(`Không ghi được trận bắt đầu: ${e.message}`),
+      );
+  }
+
+  /** Hết hạn vào phòng: một người vắng -> người đó thua; cả hai vắng -> huỷ trận */
+  private async resolveNoShow(code: string) {
+    this.noShowTimers.delete(code);
+    const room = this.rooms.get(code);
+    if (!room || room.status !== 'lobby' || room.kind === 'casual') return;
+    const present = room.players.filter((p) => p.connected);
+    if (present.length === room.players.length)
+      return this.autoStartIfReady(room);
+    if (present.length === 0) {
+      const out = await this.flow.onCancelled(
+        room,
+        'Cả hai người chơi không vào trận',
+      );
+      this.rooms.closeRoom(room);
+      await this.openTournamentMatches(out.ready);
+      return;
+    }
+    const absent = room.players.find((p) => !p.connected)!;
+    this.rooms.startGame(room);
+    this.rooms.forfeit(room, absent.userId, `${absent.name} không vào trận`);
+    this.broadcastRoom(room);
+    this.broadcastGame(room);
+    await this.handleFinished(room);
+  }
+
+  /** Trận có người thắng: ghi kết quả (đúng 1 lần) và mở trận giải đấu kế tiếp */
+  private async handleFinished(room: Room): Promise<void> {
+    this.clearNoShow(room.code);
+    let out: FinishOutcome;
+    try {
+      out = await this.flow.onFinished(room);
+    } catch (e) {
+      this.logger.error(
+        `[${room.code}] Không ghi được kết quả trận: ${(e as Error).message}`,
+      );
+      return;
+    }
+    if (out.result && room.kind === 'ranked') {
+      for (const r of out.result.players) {
+        const p = room.players.find((x) => x.userId === r.userId);
+        if (p && r.delta)
+          this.notice(
+            room,
+            `📈 ${p.name}: ${r.delta > 0 ? '+' : ''}${r.delta} điểm xếp hạng (${r.after})`,
+          );
+      }
+    }
+    await this.openTournamentMatches(out.ready);
+  }
+
+  /** Ra khỏi phòng trận ghép / giải đấu trước khi bắt đầu = bỏ trận (không lợi dụng để tránh mất điểm) */
+  private forfeitBeforeStart(room: Room) {
+    if (
+      room.kind === 'casual' ||
+      room.status !== 'lobby' ||
+      room.players.length < 2
+    )
+      return;
+    this.clearNoShow(room.code);
+    this.rooms.startGame(room);
+  }
 
   // =====================================================
   // AUTH
@@ -225,10 +437,12 @@ export class BilliardGateway implements OnGatewayDisconnect {
 
     const wasHost = room.hostId === userId;
     this.leaveVoice(room, userId);
+    this.forfeitBeforeStart(room);
     // Rời giữa trận -> xử thua, người còn lại thắng
     if (this.rooms.forfeit(room, userId, `${player.name} ${reason}`)) {
       this.clearTurnTimer(room.code);
       this.broadcastGame(room);
+      void this.handleFinished(room);
     }
     if (player.socketId) {
       this.server.in(player.socketId).socketsLeave(roomKey(room.code));
@@ -306,10 +520,13 @@ export class BilliardGateway implements OnGatewayDisconnect {
   @SubscribeMessage('bida:list')
   async handleList(
     @ConnectedSocket() client: Socket,
+    @MessageBody() body?: unknown,
   ): Promise<AckResponse<PublicRoom[]>> {
     const user = await this.getUser(client);
     if (!user) return { ok: false, error: 'Bạn cần đăng nhập' };
-    return { ok: true, data: this.rooms.listPublicLobbies() };
+    const q = validateDto(RoomListDto, body);
+    if (!q.ok) return { ok: false, error: q.error };
+    return { ok: true, data: this.rooms.listPublicLobbies(q.value) };
   }
 
   /** Phòng mà người dùng đang ở (để hiện nút quay lại phòng) */
@@ -326,17 +543,29 @@ export class BilliardGateway implements OnGatewayDisconnect {
   @SubscribeMessage('bida:create')
   async handleCreate(
     @ConnectedSocket() client: Socket,
-    @MessageBody() body?: Partial<RoomSettings>,
+    @MessageBody() body?: unknown,
   ): Promise<AckResponse<JoinResult>> {
     const user = await this.getUser(client);
     if (!user) return { ok: false, error: 'Bạn cần đăng nhập' };
+    const dto = validateDto(CreateRoomDto, body);
+    if (!dto.ok) return { ok: false, error: dto.error };
+    const busy =
+      this.rooms.busyReason(user.userId) ?? this.matchmakingBusy(user.userId);
+    if (busy) return { ok: false, error: busy };
 
     const current = this.rooms.getRoomOfUser(user.userId);
     if (current) this.removeFromRoom(current, user.userId, 'đã rời phòng');
 
     const room = this.rooms.create({ ...user, socketId: client.id });
-    if (body) this.rooms.updateSettings(room, body);
+    const { password, ...settings } = dto.value;
+    this.rooms.updateSettings(room, {
+      ...settings,
+      name: settings.name || `Phòng của ${user.name}`,
+    });
+    if (room.settings.isPrivate && password)
+      this.rooms.setPassword(room, password);
     await client.join(roomKey(room.code));
+    await client.join(userRoomKey(user.userId));
 
     return { ok: true, data: this.joinResult(room) };
   }
@@ -344,12 +573,20 @@ export class BilliardGateway implements OnGatewayDisconnect {
   @SubscribeMessage('bida:join')
   async handleJoin(
     @ConnectedSocket() client: Socket,
-    @MessageBody() body: { code?: string },
+    @MessageBody() body: unknown,
   ): Promise<AckResponse<JoinResult>> {
     const user = await this.getUser(client);
     if (!user) return { ok: false, error: 'Bạn cần đăng nhập' };
+    const dto = validateDto(JoinRoomDto, {
+      ...(body && typeof body === 'object' ? body : {}),
+      code: this.rooms.normalizeCode(
+        (body as { code?: unknown } | undefined)?.code,
+      ),
+    });
+    if (!dto.ok) return { ok: false, error: 'Mã phòng không hợp lệ' };
+    await client.join(userRoomKey(user.userId));
 
-    const code = this.rooms.normalizeCode(body?.code);
+    const code = dto.value.code;
     const room = this.rooms.get(code);
     if (!room) return { ok: false, error: 'Không tìm thấy phòng với mã này' };
 
@@ -366,8 +603,34 @@ export class BilliardGateway implements OnGatewayDisconnect {
       await client.join(roomKey(room.code));
       if (wasDisconnected) this.notice(room, `🔌 ${user.name} đã kết nối lại`);
       this.broadcastRoom(room);
+      this.autoStartIfReady(room);
       return { ok: true, data: this.joinResult(room) };
     }
+
+    if (room.kind !== 'casual') {
+      return {
+        ok: false,
+        error: 'Đây là phòng trận đấu dành riêng cho 2 người chơi',
+      };
+    }
+    if (
+      room.passwordHash &&
+      !checkPassword(dto.value.password ?? '', room.passwordHash)
+    ) {
+      return dto.value.password
+        ? {
+            ok: false,
+            error: 'Mật khẩu phòng không đúng',
+            code: 'WRONG_PASSWORD',
+          }
+        : {
+            ok: false,
+            error: 'Phòng này cần mật khẩu',
+            code: 'PASSWORD_REQUIRED',
+          };
+    }
+    const busy = this.rooms.busyReason(user.userId);
+    if (busy) return { ok: false, error: busy };
 
     if (room.status !== 'lobby') {
       return { ok: false, error: 'Trận đấu trong phòng này đã bắt đầu' };
@@ -406,6 +669,12 @@ export class BilliardGateway implements OnGatewayDisconnect {
     const room = this.rooms.getRoomOfUser(user.userId);
     if (!room || room.hostId !== user.userId) {
       return { ok: false, error: 'Chỉ chủ phòng mới được kick' };
+    }
+    if (room.kind !== 'casual') {
+      return {
+        ok: false,
+        error: 'Không thể kick trong phòng trận xếp cặp / giải đấu',
+      };
     }
     // Chỉ được kick khi đang ở phòng chờ, trận đã bắt đầu thì không
     if (room.status !== 'lobby') {
@@ -448,7 +717,8 @@ export class BilliardGateway implements OnGatewayDisconnect {
   ): Promise<AckResponse> {
     const user = await this.getUser(client);
     const room = user && this.rooms.getRoomOfUser(user.userId);
-    if (!user || !room || room.status !== 'lobby') return { ok: false };
+    if (!user || !room || room.status !== 'lobby' || room.kind !== 'casual')
+      return { ok: false };
     const changed = this.rooms.changeSeat(
       room,
       user.userId,
@@ -470,10 +740,25 @@ export class BilliardGateway implements OnGatewayDisconnect {
       !user ||
       !room ||
       room.hostId !== user.userId ||
-      room.status !== 'lobby'
+      room.status !== 'lobby' ||
+      room.kind !== 'casual'
     )
       return { ok: false, error: 'Chỉ chủ phòng mới được đổi cài đặt' };
-    this.rooms.updateSettings(room, body ?? {});
+    const { password, ...patch } = (body ?? {}) as Partial<RoomSettings> & {
+      password?: unknown;
+    };
+    this.rooms.updateSettings(room, patch);
+    if (password !== undefined) {
+      if (
+        password !== null &&
+        (typeof password !== 'string' ||
+          password.length < 3 ||
+          password.length > 32)
+      )
+        return { ok: false, error: 'Mật khẩu 3–32 ký tự' };
+      this.rooms.setPassword(room, room.settings.isPrivate ? password : null);
+    }
+    if (!room.settings.isPrivate) this.rooms.setPassword(room, null);
     this.broadcastRoom(room);
     return { ok: true };
   }
@@ -494,7 +779,14 @@ export class BilliardGateway implements OnGatewayDisconnect {
     if (notReady.length > 0)
       return { ok: false, error: 'Còn người chơi chưa sẵn sàng' };
 
+    if (room.kind !== 'casual')
+      return { ok: false, error: 'Trận xếp cặp tự bắt đầu khi đủ người' };
     this.rooms.startGame(room);
+    void this.flow
+      .onStarted(room)
+      .catch((e: Error) =>
+        this.logger.error(`Không ghi được trận bắt đầu: ${e.message}`),
+      );
     this.logger.log(
       `[${room.code}] Bắt đầu trận ${room.settings.mode === 'free' ? 'phăng' : '3 băng'} ${room.settings.target} điểm`,
     );
@@ -511,6 +803,13 @@ export class BilliardGateway implements OnGatewayDisconnect {
     const room = user && this.rooms.getRoomOfUser(user.userId);
     if (!user || !room || room.hostId !== user.userId)
       return { ok: false, error: 'Chỉ chủ phòng mới được tạo ván mới' };
+    if (room.kind !== 'casual')
+      return { ok: false, error: 'Trận xếp cặp / giải đấu chỉ đấu một ván' };
+    // ván đang dở bị huỷ: ghi là CANCELLED (không tính thắng thua)
+    if (room.status === 'playing' && room.snapshot?.winner === null)
+      void this.flow
+        .onCancelled(room, 'Chủ phòng huỷ ván')
+        .catch(() => undefined);
     this.clearTurnTimer(room.code);
     this.rooms.resetToLobby(room);
     this.notice(room, '🔄 Chủ phòng đã đưa mọi người về phòng chờ');
@@ -600,6 +899,7 @@ export class BilliardGateway implements OnGatewayDisconnect {
         `[${room.code}] ${winner?.name} thắng ${res.scores.join('-')}`,
       );
       this.broadcastRoom(room);
+      void this.handleFinished(room);
     } else {
       this.scheduleTurnTimer(room);
     }

@@ -1,3 +1,4 @@
+import { CAROM_TABLE_CONFIGS, spotPositions } from './table';
 import { applyClothFriction } from './cloth';
 import {
   RAILS,
@@ -257,9 +258,14 @@ export function simulateShot(
 export function initialPositions(
   config: PhysicsConfig = DEFAULT_PHYSICS,
 ): BallPositions {
+  // Bi cái (trắng) lệch 182,5 mm trên đường đầu bàn, bi vàng ở chấm đầu bàn, bi đỏ ở chấm cuối bàn
+  const spot = spotPositions({
+    ...CAROM_TABLE_CONFIGS.LIBRE,
+    playingSurface: { length: config.tableWidth, width: config.tableHeight },
+  });
   return [
-    [-config.tableWidth / 4, -0.1825],
-    [-config.tableWidth / 4, 0],
-    [config.tableWidth / 4, 0],
+    [spot.head.x, -spot.breakOffset],
+    [spot.head.x, spot.head.y],
+    [spot.foot.x, spot.foot.y],
   ];
 }

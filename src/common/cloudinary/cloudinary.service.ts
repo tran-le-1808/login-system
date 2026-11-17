@@ -49,6 +49,55 @@ export class CloudinaryService {
     });
   }
 
+  /** Thư mục ảnh giải đấu Bida */
+  static readonly TOURNAMENT_FOLDER = 'chat-zone/billiard/tournaments';
+
+  /** Ảnh bìa giải đấu Bida: cắt 1200×630 (tỉ lệ ảnh chia sẻ), nén tự động */
+  uploadTournamentThumbnail(
+    file: Express.Multer.File,
+  ): Promise<UploadApiResponse> {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: CloudinaryService.TOURNAMENT_FOLDER,
+          resource_type: 'image',
+          transformation: [
+            { width: 1200, height: 630, crop: 'fill', gravity: 'auto' },
+            { quality: 'auto', fetch_format: 'auto' },
+          ],
+        },
+        (
+          error: UploadApiErrorResponse | undefined,
+          result: UploadApiResponse | undefined,
+        ) => {
+          if (error)
+            return reject(
+              new Error(error.message || 'Upload to Cloudinary failed'),
+            );
+          if (!result)
+            return reject(
+              new Error('Upload to Cloudinary failed: No result returned'),
+            );
+          resolve(result);
+        },
+      );
+      streamifier.createReadStream(file.buffer).pipe(uploadStream);
+    });
+  }
+
+  /** URL có phải ảnh giải đấu do chính hệ thống tải lên Cloudinary không (chặn link ngoài) */
+  static isTournamentThumbnailUrl(url: string): boolean {
+    const cloud = process.env.CLOUDINARY_CLOUD_NAME;
+    if (!cloud) return false;
+    const prefix = `https://res.cloudinary.com/${cloud}/image/upload/`;
+    if (!url.startsWith(prefix) || url.length > 400) return false;
+    const rest = url.slice(prefix.length).replace(/^v\d+\//, '');
+    return (
+      rest.startsWith(CloudinaryService.TOURNAMENT_FOLDER + '/') &&
+      /^[A-Za-z0-9_\-./]+$/.test(rest)
+    );
+  }
+
   /** Thư mục chứa tệp đính kèm tin nhắn */
   static readonly CHAT_FOLDER = 'chat-zone/messages';
 

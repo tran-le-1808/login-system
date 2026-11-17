@@ -19,6 +19,21 @@ export const ALLOWED_TARGETS: Record<CaromMode, number[]> = {
 
 export type RoomStatus = 'lobby' | 'playing' | 'finished';
 
+/** casual = phòng tự tạo; quick / ranked = ghép trận tự động; tournament = trận trong nhánh đấu */
+export type RoomKind = 'casual' | 'quick' | 'ranked' | 'tournament';
+
+export const TURN_SECONDS_OPTIONS = [30, 45, 60, 90];
+
+/** Thông tin trận (phòng ghép trận / giải đấu) */
+export interface RoomMatchMeta {
+  matchId: string;
+  ruleSet: string | null;
+  tournamentId: string | null;
+  tournamentMatchId: string | null;
+  /** Hạn vào phòng (quá hạn: xử thua người vắng / huỷ trận) */
+  joinDeadline: number | null;
+}
+
 export interface RoomSettings {
   isPrivate: boolean;
   /** free = Phăng (chạm 2 bi), three = 3 băng */
@@ -27,6 +42,10 @@ export interface RoomSettings {
   target: number;
   /** Cho phép hiện đường ngắm dự đoán */
   guideline: boolean;
+  /** Tên phòng (casual) */
+  name: string;
+  /** Thời gian mỗi lượt (giây) */
+  turnSeconds: number;
 }
 
 export interface RoomPlayer {
@@ -108,10 +127,18 @@ export interface BilliardMatch {
   endedAt?: number;
   /** Server time khi gửi (client dùng để đồng bộ đồng hồ lượt) */
   serverNow?: number;
+  /** Thời gian mỗi lượt của trận này (giây) */
+  turnSeconds: number;
 }
 
 export interface Room {
   code: string;
+  kind: RoomKind;
+  /** Mã trận đang / vừa diễn ra (mỗi ván một mã — dùng để ghi kết quả đúng 1 lần) */
+  matchId: string | null;
+  meta: RoomMatchMeta | null;
+  /** salt:hash (scrypt) — chỉ phòng casual riêng tư có mật khẩu */
+  passwordHash: string | null;
   hostId: string;
   status: RoomStatus;
   settings: RoomSettings;
@@ -128,6 +155,10 @@ export interface Room {
 /** Dữ liệu phòng gửi cho client (không có snapshot / socketId) */
 export interface PublicRoom {
   code: string;
+  kind: RoomKind;
+  hasPassword: boolean;
+  hostName: string;
+  meta: RoomMatchMeta | null;
   hostId: string;
   status: RoomStatus;
   settings: RoomSettings;
@@ -138,5 +169,7 @@ export interface PublicRoom {
 export interface AckResponse<T = undefined> {
   ok: boolean;
   error?: string;
+  /** Mã lỗi máy đọc được (vd. PASSWORD_REQUIRED) */
+  code?: string;
   data?: T;
 }

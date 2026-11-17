@@ -5,8 +5,10 @@
  * ⚠️ Thư mục physics/ được sao chép sang frontend (chat-zone/app/games/billiard/_lib/physics/)
  *    để vẽ đường ngắm. Server vẫn là nơi quyết định kết quả cú đánh.
  */
+import { BALL_SPEC, CUSHION_SPEC, PLAYING_SURFACE } from './table';
+
 export interface PhysicsConfig {
-  /** Kích thước mặt chơi (mép trong băng) */
+  /** Kích thước mặt chơi (mép trong băng): tableWidth = chiều dài (trục x), tableHeight = chiều rộng (trục y) */
   tableWidth: number;
   tableHeight: number;
   ballRadius: number;
@@ -64,9 +66,10 @@ export interface PhysicsConfig {
 }
 
 export const DEFAULT_PHYSICS: PhysicsConfig = {
-  tableWidth: 2.84,
-  tableHeight: 1.42,
-  ballRadius: 0.03075,
+  // Lấy từ cấu hình bàn trung tâm (table.ts) — cùng giá trị số như trước, vật lý không đổi
+  tableWidth: PLAYING_SURFACE.length,
+  tableHeight: PLAYING_SURFACE.width,
+  ballRadius: BALL_SPEC.radius,
   ballMass: 0.21,
   gravity: 9.81,
 
@@ -79,7 +82,7 @@ export const DEFAULT_PHYSICS: PhysicsConfig = {
 
   cushionRestitution: 0.8,
   cushionFriction: 0.16,
-  cushionHeight: 0.037,
+  cushionHeight: CUSHION_SPEC.noseHeight,
 
   minCueSpeed: 0.25,
   maxCueSpeed: 6.3,
@@ -87,7 +90,7 @@ export const DEFAULT_PHYSICS: PhysicsConfig = {
   cueTipRadius: 0.0065,
   cueShaftRadius: 0.0075,
   cueLength: 1.47,
-  railTopHeight: 0.049,
+  railTopHeight: CUSHION_SPEC.height,
   strikeTableFriction: 0.3,
   maxElevation: 90,
   cueMass: 0.54,

@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 import {
   ALLOWED_TARGETS,
   BILLIARD_MAX_PLAYERS,
   BILLIARD_TURN_SECONDS,
   BilliardMatch,
   CompactEvent,
+  RoomKind,
+  RoomMatchMeta,
+  TURN_SECONDS_OPTIONS,
   PlayerStats,
   PublicRoom,
   Room,
@@ -33,7 +37,35 @@ export const DEFAULT_SETTINGS: RoomSettings = {
   mode: 'free',
   target: 10,
   guideline: true,
+  name: '',
+  turnSeconds: BILLIARD_TURN_SECONDS,
 };
+
+const MAX_ROOM_NAME = 40;
+
+export function hashPassword(password: string): string {
+  const salt = randomBytes(8).toString('hex');
+  return `${salt}:${scryptSync(password, salt, 32).toString('hex')}`;
+}
+
+export function checkPassword(
+  password: string,
+  stored: string | null,
+): boolean {
+  if (!stored) return true;
+  const [salt, hash] = stored.split(':');
+  if (!salt || !hash) return false;
+  const got = scryptSync(password, salt, 32);
+  const want = Buffer.from(hash, 'hex');
+  return got.length === want.length && timingSafeEqual(got, want);
+}
+
+export interface RoomListQuery {
+  search?: string;
+  mode?: 'free' | 'three';
+  status?: 'lobby' | 'playing';
+  sort?: 'newest' | 'players';
+}
 /** Kết quả xử lý 1 lệnh đánh */
 export type ShootOutcome =
   | { error: string }
@@ -83,6 +115,10 @@ export class BilliardRoomService {
   toPublic(room: Room): PublicRoom {
     return {
       code: room.code,
+      kind: room.kind,
+      hasPassword: !!room.passwordHash,
+      hostName: this.findPlayer(room, room.hostId)?.name ?? '',
+      meta: room.meta,
       hostId: room.hostId,
       status: room.status,
       settings: room.settings,
@@ -102,23 +138,122 @@ export class BilliardRoomService {
     };
   }
 
-  listPublicLobbies(): PublicRoom[] {
+  /** Danh sách phòng casual công khai (tìm kiếm / lọc / sắp xếp ở server) */
+  listPublicLobbies(q: RoomListQuery = {}): PublicRoom[] {
+    const search = q.search?.trim().toLowerCase();
     return Array.from(this.rooms.values())
       .filter(
         (r) =>
-          r.status === 'lobby' &&
+          r.kind === 'casual' &&
           !r.settings.isPrivate &&
-          r.players.length < BILLIARD_MAX_PLAYERS,
+          (q.status
+            ? q.status === 'playing'
+              ? r.status !== 'lobby'
+              : r.status === 'lobby'
+            : true) &&
+          (!q.mode || r.settings.mode === q.mode) &&
+          (!search ||
+            r.settings.name.toLowerCase().includes(search) ||
+            r.code.toLowerCase().includes(search) ||
+            (this.findPlayer(r, r.hostId)?.name ?? '')
+              .toLowerCase()
+              .includes(search)),
       )
-      .sort((a, b) => b.createdAt - a.createdAt)
-      .slice(0, 30)
+      .sort(
+        (a, b) =>
+          (q.sort === 'players' ? b.players.length - a.players.length : 0) ||
+          b.createdAt - a.createdAt,
+      )
+      .slice(0, 50)
       .map((r) => this.toPublic(r));
+  }
+
+  /** Thống kê nhanh cho sảnh */
+  stats(): { rooms: number; playing: number; players: number } {
+    let playing = 0;
+    let players = 0;
+    for (const r of this.rooms.values()) {
+      if (r.status === 'playing') playing++;
+      players += r.players.filter((p) => p.connected).length;
+    }
+    return { rooms: this.rooms.size, playing, players };
+  }
+
+  /** Người chơi đang trong một trận (đang chơi, hoặc phòng ghép trận / giải đấu chưa kết thúc) */
+  busyReason(userId: string): string | null {
+    const r = this.getRoomOfUser(userId);
+    if (!r) return null;
+    if (r.status === 'playing') return 'Bạn đang trong một trận đấu';
+    if (r.kind !== 'casual' && r.status === 'lobby')
+      return 'Bạn đang có trận chờ bắt đầu';
+    return null;
+  }
+
+  /**
+   * Phòng cho trận ghép tự động / giải đấu: dành sẵn 2 ghế cho đúng 2 người, chưa ai kết nối.
+   * Người chơi vào bằng `bida:join` như phòng thường; đủ người thì trận tự bắt đầu.
+   */
+  createMatchRoom(
+    kind: Exclude<RoomKind, 'casual'>,
+    users: { userId: string; name: string; avatar?: string }[],
+    rule: { mode: 'free' | 'three'; target: number; name: string },
+    meta: RoomMatchMeta,
+  ): Room {
+    const code = this.generateCode();
+    const room: Room = {
+      code,
+      kind,
+      matchId: meta.matchId,
+      meta,
+      passwordHash: null,
+      hostId: users[0].userId,
+      status: 'lobby',
+      settings: {
+        ...DEFAULT_SETTINGS,
+        isPrivate: true,
+        mode: rule.mode,
+        target: rule.target,
+        name: rule.name,
+      },
+      players: [],
+      snapshot: null,
+      chat: [],
+      voice: {},
+      processedShots: new Set<string>(),
+      createdAt: Date.now(),
+    };
+    this.rooms.set(code, room);
+    for (const u of users) {
+      // rời phòng casual đang chờ (nếu có) để không ở 2 phòng cùng lúc
+      const old = this.getRoomOfUser(u.userId);
+      if (old && old.code !== code && old.status !== 'playing')
+        this.removePlayer(old, u.userId);
+      const p = this.addPlayer(room, { ...u, socketId: null });
+      p.connected = false;
+    }
+    return room;
+  }
+
+  /** Xoá phòng (huỷ trận) */
+  closeRoom(room: Room): void {
+    for (const p of room.players)
+      if (this.userRoom.get(p.userId) === room.code)
+        this.userRoom.delete(p.userId);
+    this.rooms.delete(room.code);
+  }
+
+  setPassword(room: Room, password: string | null): void {
+    room.passwordHash = password ? hashPassword(password) : null;
   }
 
   create(user: Omit<RoomPlayer, 'seat' | 'ready' | 'connected' | 'joinedAt'>) {
     const code = this.generateCode();
     const room: Room = {
       code,
+      kind: 'casual',
+      matchId: null,
+      meta: null,
+      passwordHash: null,
       hostId: user.userId,
       status: 'lobby',
       settings: { ...DEFAULT_SETTINGS },
@@ -215,6 +350,13 @@ export class BilliardRoomService {
       }
     }
     if (typeof patch.guideline === 'boolean') next.guideline = patch.guideline;
+    if (typeof patch.name === 'string')
+      next.name = patch.name.trim().slice(0, MAX_ROOM_NAME);
+    if (
+      typeof patch.turnSeconds === 'number' &&
+      TURN_SECONDS_OPTIONS.includes(patch.turnSeconds)
+    )
+      next.turnSeconds = patch.turnSeconds;
     if (
       typeof patch.target === 'number' &&
       ALLOWED_TARGETS[next.mode].includes(patch.target)
@@ -251,7 +393,9 @@ export class BilliardRoomService {
       currentRun: 0,
       innings: 0,
     });
+    const turnSeconds = room.settings.turnSeconds;
     const match: BilliardMatch = {
+      turnSeconds,
       seq: 0,
       mode: room.settings.mode,
       target: room.settings.target,
@@ -262,12 +406,15 @@ export class BilliardRoomService {
       stats: players.map(emptyStats),
       turn: 0,
       busyUntil: now,
-      turnDeadline: now + BILLIARD_TURN_SECONDS * 1000,
+      turnDeadline: now + turnSeconds * 1000,
       lastShot: null,
       winner: null,
       startedAt: now,
     };
     match.stats[0].innings = 1;
+    // mỗi ván casual một mã trận mới; phòng ghép trận / giải đấu dùng mã được cấp sẵn
+    if (room.kind === 'casual')
+      room.matchId = `c-${room.code}-${now.toString(36)}`;
     room.status = 'playing';
     room.snapshot = match;
     room.processedShots = new Set();
@@ -369,7 +516,7 @@ export class BilliardRoomService {
       this.passTurn(match);
     }
     match.busyUntil = now + Math.ceil(res.duration * 1000) + SETTLE_MS;
-    match.turnDeadline = match.busyUntil + BILLIARD_TURN_SECONDS * 1000;
+    match.turnDeadline = match.busyUntil + match.turnSeconds * 1000;
     return { match };
   }
 
@@ -389,7 +536,7 @@ export class BilliardRoomService {
     match.seq += 1;
     match.lastShot = null;
     match.busyUntil = Date.now();
-    match.turnDeadline = match.busyUntil + BILLIARD_TURN_SECONDS * 1000;
+    match.turnDeadline = match.busyUntil + match.turnSeconds * 1000;
     return true;
   }
 
