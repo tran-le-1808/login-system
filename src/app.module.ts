@@ -14,6 +14,7 @@ import { AIModule } from './ai/ai.module';
 import { MonopolyModule } from './monopoly/monopoly.module';
 import { BilliardModule } from './billiard/billiard.module';
 import { PoolModule } from './pool/pool.module';
+import { CaroModule } from './caro/caro.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { PoolModule } from './pool/pool.module';
     MonopolyModule,
     BilliardModule,
     PoolModule,
+    CaroModule,
   ],
   controllers: [AppController],
   providers: [AppService],
