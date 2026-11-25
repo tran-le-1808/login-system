@@ -1,0 +1,54 @@
+{
+  "HACKER": {
+    "name": "Hacker",
+    "perk": "Thao tác giữ (mở ống, cứu người, buộc dây, tắt camera) nhanh hơn 35%",
+    "color": "#38bdf8",
+    "speed": 1,
+    "channelTime": 0.65,
+    "noise": 1,
+    "breakFree": false,
+    "skills": {
+      "dexterity": 20
+    },
+    "craftBonus": false
+  },
+  "FIGHTER": {
+    "name": "Fighter",
+    "perk": "Vùng thoát khi bị lính tóm (hồi 120 giây)",
+    "color": "#f87171",
+    "speed": 1,
+    "channelTime": 1,
+    "noise": 1,
+    "breakFree": true,
+    "skills": {
+      "fitness": 20
+    },
+    "craftBonus": false
+  },
+  "MECHANIC": {
+    "name": "Mechanic",
+    "perk": "Chế tạo nhanh hơn, tỉ lệ thành công +10%, dụng cụ +1 độ bền, hình nộm chân thực hơn",
+    "color": "#fbbf24",
+    "speed": 1,
+    "channelTime": 1,
+    "noise": 1,
+    "breakFree": false,
+    "skills": {
+      "crafting": 25
+    },
+    "craftBonus": true
+  },
+  "SCOUT": {
+    "name": "Scout",
+    "perk": "Nhanh hơn 12%, chạy êm (tiếng động giảm 50%)",
+    "color": "#4ade80",
+    "speed": 1.12,
+    "channelTime": 1,
+    "noise": 0.5,
+    "breakFree": false,
+    "skills": {
+      "social": 15
+    },
+    "craftBonus": false
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "_doc": "Thuộc tính khu theo id (hình dạng khu nằm ở lớp zones của bản đồ Tiled). security 0–3; khu security 3 là khu cấm. 'cell_*' áp cho mọi id bắt đầu bằng cell_.",
+  "defaults": { "security": 1 },
+  "zones": {
+    "cell_*": { "security": 1, "cellBlock": true, "note": "12 xà lim: 1 giường + tủ + bồn cầu + cửa khoá đêm" },
+    "block_a": { "security": 1, "cellBlock": true },
+    "block_b": { "security": 1, "cellBlock": true },
+    "hall": { "security": 1, "note": "Trục nối mọi khu, rộng 3 ô; camera C1, C2" },
+    "canteen": { "security": 1 },
+    "workshop": { "security": 2, "note": "Cửa sau (chìa kho) thông ra kho; camera C3" },
+    "laundry": { "security": 2, "note": "Đồ cai ngục gửi giặt; xe giặt ra cổng 10:00" },
+    "library": { "security": 1, "note": "Mở cả ngày; phòng nhỏ phía trong có lưới thông gió" },
+    "gym": { "security": 1 },
+    "shower": { "security": 1 },
+    "infirmary": { "security": 1 },
+    "yard": { "security": 2, "note": "Hàng rào đôi + tháp canh; camera C4" },
+    "fence_strip": { "security": 3 },
+    "storage": { "security": 3, "note": "Camera C5; thông ra cổng xe tải và phòng điện" },
+    "power": { "security": 3 },
+    "office": { "security": 3, "note": "Cần thẻ cai ngục; camera C6" },
+    "solitary": { "security": 3, "note": "Camera C7" },
+    "solitary_*": { "security": 3 },
+    "confiscation": { "security": 3 },
+    "truck_gate": { "security": 3, "note": "Camera C8; cổng mở khi xe hàng tới" },
+    "outside": { "security": 0 }
+  }
+}

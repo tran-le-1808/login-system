@@ -1,0 +1,33 @@
+{
+  "_doc": "Độ cứng ô khi đào (theo ký tự ô). hardness null = không đào được. Tường giáp bên ngoài (ô 'o') là tường ngoài: cứng 3 (chỉ Cuốc chim cải tiến). Vách giữa hai xà lim (thinWallZones) cứng 1.",
+  "#": {
+    "name": "Tường",
+    "hardness": 2,
+    "diggable": true,
+    "onDigTile": "hole"
+  },
+  ".": {
+    "name": "Sàn xi măng",
+    "hardness": 2,
+    "diggable": true,
+    "onDigTile": "tunnelEntrance"
+  },
+  ",": {
+    "name": "Sàn đất / cỏ",
+    "hardness": 1,
+    "diggable": true,
+    "onDigTile": "tunnelEntrance"
+  },
+  "o": {
+    "name": "Đất bên ngoài",
+    "hardness": 1,
+    "diggable": true,
+    "onDigTile": "tunnelEntrance"
+  },
+  "thinWallZones": [
+    "cell_*"
+  ],
+  "thinWallHardness": 1,
+  "outerWallHardness": 3,
+  "tunnelHardness": 1
+}

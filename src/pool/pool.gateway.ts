@@ -742,9 +742,8 @@ export class PoolGateway implements OnGatewayDisconnect, OnModuleDestroy {
     return { ok: true };
   }
 
-  /** Ghép cặp: chênh ELO cho phép mở rộng dần theo thời gian chờ (100 + 25/giây) */
+  /** Ghép cặp theo thứ tự vào hàng chờ, KHÔNG lọc theo ELO (ELO chỉ dùng để tính điểm sau trận) */
   private sweepQueue() {
-    const now = Date.now();
     for (const type of ['eight', 'nine'] as GameType[]) {
       const q = this.queue[type].filter(
         (e) => this.server?.sockets.sockets.get(e.socketId)?.connected,
@@ -753,12 +752,11 @@ export class PoolGateway implements OnGatewayDisconnect, OnModuleDestroy {
       const used = new Set<string>();
       for (const a of q) {
         if (used.has(a.user.userId)) continue;
-        const win = (e: QueueEntry) => 100 + 25 * ((now - e.since) / 1000);
         const b = q.find(
           (e) =>
             e !== a &&
             !used.has(e.user.userId) &&
-            Math.abs(e.elo - a.elo) <= Math.min(win(a), win(e)),
+            e.user.userId !== a.user.userId,
         );
         if (!b) continue;
         used.add(a.user.userId);

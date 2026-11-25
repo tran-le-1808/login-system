@@ -1,6 +1,11 @@
 // ⚠️ BẢN SAO TỰ ĐỘNG — KHÔNG SỬA Ở ĐÂY. Nguồn: chat-zone/app/games/pool/_lib (npm run pool:sync-shared)
 /* eslint-disable */
-import { POOL_PHYSICS, type PoolConfig } from './config';
+import {
+  POOL_PHYSICS,
+  configForTable,
+  type PoolConfig,
+  type TableSize,
+} from './config';
 import { DEG, dcos, dlen, dsin } from './math';
 
 /** Đoạn thẳng băng: mũi băng (rail) hoặc mặt vát mũi lỗ (jaw) */
@@ -232,13 +237,18 @@ export const POOL_TABLE = buildTable(POOL_PHYSICS);
 /** Bộ nhớ đệm hình học theo preset lỗ */
 const cache = new Map<string, TableGeometry>();
 export function tableFor(c: PoolConfig): TableGeometry {
-  const k = `${c.cornerMouth}|${c.sideMouth}|${c.cornerShelf}|${c.sideShelf}|${c.noseRadius}`;
+  const k = `${c.tableLength}|${c.tableWidth}|${c.cornerMouth}|${c.sideMouth}|${c.cornerShelf}|${c.sideShelf}|${c.noseRadius}`;
   let t = cache.get(k);
   if (!t) {
     t = buildTable(c);
     cache.set(k, t);
   }
   return t;
+}
+
+/** Hình học bàn theo cỡ (dùng cho luật: foot spot, head string, giới hạn đặt bi — không phụ thuộc độ khó lỗ) */
+export function tableOfSize(size: TableSize = '9ft'): TableGeometry {
+  return size === '9ft' ? POOL_TABLE : tableFor(configForTable('wpa', size));
 }
 
 /** Điểm gần nhất trên đoạn thẳng */

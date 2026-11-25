@@ -1,0 +1,5 @@
+{
+  "_doc": "Xe ra vào trại. Lên xe được trong [boardFrom, depart). Khi xe đi: kiểm tra xe theo xác suất (giảm khi cải trang); qua được thì thả người ở điểm vehicleDrop bên ngoài.",
+  "laundry": { "name": "Xe giặt", "boardFrom": "00:00", "depart": "10:00", "inspectChance": 0.3, "disguiseFactor": 0.4, "boardSeconds": 3 },
+  "supply": { "name": "Xe hàng", "boardFrom": "14:00", "depart": "14:20", "inspectChance": 0.25, "disguiseFactor": 0.4, "boardSeconds": 3, "opensGate": true }
+}

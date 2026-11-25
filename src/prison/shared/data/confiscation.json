@@ -1,0 +1,12 @@
+{
+  "keepDays": 3,
+  "bribePriceMultiplier": 1.5,
+  "minBribe": 10,
+  "breakInSeconds": 4,
+  "lockerId": "evidence_locker",
+  "rules": {
+    "confiscateContraband": true,
+    "confiscateEscapeItems": true,
+    "confiscateWeapons": true
+  }
+}

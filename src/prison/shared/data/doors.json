@@ -1,0 +1,9 @@
+{
+  "_doc": "Luật mở cửa theo ký tự ô. openWith: một trong các món trong túi. Cai ngục đi qua mọi cửa trừ R.",
+  "c": { "name": "Cửa xà lim", "lockedFrom": "21:00", "lockedUntil": "08:00", "openWith": ["cell_key"], "trace": true },
+  "K": { "name": "Cửa kho", "openWith": ["fake_key", "keycard"], "trace": true },
+  "L": { "name": "Cửa văn phòng", "openWith": ["keycard", "fake_keycard"] },
+  "G": { "name": "Cổng xe tải", "openWith": [], "disguiseWith": ["keycard", "fake_keycard"], "openWhileTruck": true },
+  "traceFoundChance": 0.5,
+  "traceHeat": 25
+}

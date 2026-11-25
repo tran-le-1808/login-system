@@ -1,0 +1,559 @@
+[
+  {
+    "id": "npc_tu",
+    "name": "Ông Tư",
+    "personality": "calm",
+    "color": "#a3e635",
+    "sells": [
+      {
+        "itemId": "cloth",
+        "price": 6
+      },
+      {
+        "itemId": "food",
+        "price": 12
+      },
+      {
+        "itemId": "tape",
+        "price": 7
+      },
+      {
+        "itemId": "adhesive",
+        "price": 8
+      }
+    ],
+    "tips": [
+      {
+        "text": "Camera văn phòng quét qua lại khoảng 8 giây một lượt.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục đi khám phòng lúc 10 giờ và 15 giờ.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục hay hỏi 'Ca đêm bắt đầu lúc mấy giờ?' — người của họ đáp '21:00'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.15,
+    "courage": 0.4,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0412",
+    "inventory": {
+      "bag": [
+        "cloth",
+        "food"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_ba",
+    "name": "Ba Sẹo",
+    "personality": "greedy",
+    "color": "#fb7185",
+    "sells": [
+      {
+        "itemId": "file",
+        "price": 28
+      },
+      {
+        "itemId": "wire",
+        "price": 9
+      },
+      {
+        "itemId": "shiv",
+        "price": 38
+      },
+      {
+        "itemId": "metal_sheet",
+        "price": 16
+      },
+      {
+        "itemId": "gear_parts",
+        "price": 14
+      }
+    ],
+    "tips": [
+      {
+        "text": "Đồ giấu sau bồn cầu an toàn hơn dưới nệm.",
+        "true": true
+      },
+      {
+        "text": "Cổng xe tải không cần thẻ, chỉ cần đồng phục.",
+        "true": false
+      },
+      {
+        "text": "Mật lệnh cai ngục là 'Đá Xám' — à không, 'Đá Đen' mới đúng.",
+        "true": false
+      }
+    ],
+    "aggression": 0.5,
+    "courage": 0.5,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-0733",
+    "inventory": {
+      "bag": [
+        "file",
+        "wire"
+      ],
+      "weapon": "shiv",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_khoa",
+    "name": "Khoa Kính",
+    "personality": "snitch",
+    "color": "#fcd34d",
+    "sells": [
+      {
+        "itemId": "plastic",
+        "price": 6
+      }
+    ],
+    "tips": [
+      {
+        "text": "Ban đêm lính gác nhìn kém hơn ở chỗ không có đèn.",
+        "true": true
+      },
+      {
+        "text": "Đào hầm không cần thanh chống đâu.",
+        "true": false
+      },
+      {
+        "text": "Hỏi 'Ai trực văn phòng?' thì cai ngục thật đáp 'Cai Long'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.1,
+    "courage": 0.2,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0958",
+    "inventory": {
+      "bag": [
+        "plastic",
+        "sugar"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_hai",
+    "name": "Hai Búa",
+    "personality": "hothead",
+    "color": "#60a5fa",
+    "sells": [
+      {
+        "itemId": "metal_scrap",
+        "price": 10
+      },
+      {
+        "itemId": "wood",
+        "price": 8
+      },
+      {
+        "itemId": "pipe",
+        "price": 55
+      }
+    ],
+    "tips": [
+      {
+        "text": "Mặc đồng phục mà đứng sát lính là lộ ngay.",
+        "true": true
+      }
+    ],
+    "aggression": 0.9,
+    "courage": 0.85,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-1176",
+    "inventory": {
+      "bag": [
+        "metal_scrap"
+      ],
+      "weapon": "club",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_nam",
+    "name": "Năm Lùn",
+    "personality": "calm",
+    "color": "#38bdf8",
+    "sells": [
+      {
+        "itemId": "cloth",
+        "price": 6
+      },
+      {
+        "itemId": "food",
+        "price": 12
+      }
+    ],
+    "tips": [
+      {
+        "text": "Camera văn phòng quét qua lại khoảng 8 giây một lượt.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục đi khám phòng lúc 10 giờ và 15 giờ.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục hay hỏi 'Ca đêm bắt đầu lúc mấy giờ?' — người của họ đáp '21:00'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.15,
+    "courage": 0.4,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0520",
+    "inventory": {
+      "bag": [
+        "cloth",
+        "food"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_lam",
+    "name": "Lâm Gầy",
+    "personality": "snitch",
+    "color": "#a78bfa",
+    "sells": [
+      {
+        "itemId": "plastic",
+        "price": 6
+      },
+      {
+        "itemId": "tape",
+        "price": 6
+      },
+      {
+        "itemId": "glass",
+        "price": 4
+      }
+    ],
+    "tips": [
+      {
+        "text": "Ban đêm lính gác nhìn kém hơn ở chỗ không có đèn.",
+        "true": true
+      },
+      {
+        "text": "Đào hầm không cần thanh chống đâu.",
+        "true": false
+      },
+      {
+        "text": "Hỏi 'Ai trực văn phòng?' thì cai ngục thật đáp 'Cai Long'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.1,
+    "courage": 0.2,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0594",
+    "inventory": {
+      "bag": [
+        "plastic",
+        "sugar"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_son",
+    "name": "Sơn Đá",
+    "personality": "hothead",
+    "color": "#34d399",
+    "sells": [
+      {
+        "itemId": "metal_scrap",
+        "price": 10
+      },
+      {
+        "itemId": "wood",
+        "price": 8
+      },
+      {
+        "itemId": "pipe",
+        "price": 55
+      }
+    ],
+    "tips": [
+      {
+        "text": "Mặc đồng phục mà đứng sát lính là lộ ngay.",
+        "true": true
+      }
+    ],
+    "aggression": 0.9,
+    "courage": 0.85,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-0631",
+    "inventory": {
+      "bag": [
+        "metal_scrap"
+      ],
+      "weapon": "club",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_hieu",
+    "name": "Hiếu Sún",
+    "personality": "calm",
+    "color": "#f472b6",
+    "sells": [
+      {
+        "itemId": "cloth",
+        "price": 6
+      },
+      {
+        "itemId": "food",
+        "price": 12
+      }
+    ],
+    "tips": [
+      {
+        "text": "Camera văn phòng quét qua lại khoảng 8 giây một lượt.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục đi khám phòng lúc 10 giờ và 15 giờ.",
+        "true": true
+      },
+      {
+        "text": "Cai ngục hay hỏi 'Ca đêm bắt đầu lúc mấy giờ?' — người của họ đáp '21:00'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.15,
+    "courage": 0.4,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0668",
+    "inventory": {
+      "bag": [
+        "cloth",
+        "food"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_vinh",
+    "name": "Vĩnh Râu",
+    "personality": "greedy",
+    "color": "#facc15",
+    "sells": [
+      {
+        "itemId": "file",
+        "price": 28
+      },
+      {
+        "itemId": "wire",
+        "price": 9
+      },
+      {
+        "itemId": "shiv",
+        "price": 38
+      }
+    ],
+    "tips": [
+      {
+        "text": "Đồ giấu sau bồn cầu an toàn hơn dưới nệm.",
+        "true": true
+      },
+      {
+        "text": "Cổng xe tải không cần thẻ, chỉ cần đồng phục.",
+        "true": false
+      },
+      {
+        "text": "Mật lệnh cai ngục là 'Đá Xám' — à không, 'Đá Đen' mới đúng.",
+        "true": false
+      }
+    ],
+    "aggression": 0.5,
+    "courage": 0.5,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-0705",
+    "inventory": {
+      "bag": [
+        "file",
+        "wire"
+      ],
+      "weapon": "shiv",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_quang",
+    "name": "Quang Mập",
+    "personality": "snitch",
+    "color": "#60a5fa",
+    "sells": [
+      {
+        "itemId": "plastic",
+        "price": 6
+      },
+      {
+        "itemId": "adhesive",
+        "price": 8
+      },
+      {
+        "itemId": "battery",
+        "price": 10
+      }
+    ],
+    "tips": [
+      {
+        "text": "Ban đêm lính gác nhìn kém hơn ở chỗ không có đèn.",
+        "true": true
+      },
+      {
+        "text": "Đào hầm không cần thanh chống đâu.",
+        "true": false
+      },
+      {
+        "text": "Hỏi 'Ai trực văn phòng?' thì cai ngục thật đáp 'Cai Long'.",
+        "true": true
+      }
+    ],
+    "aggression": 0.1,
+    "courage": 0.2,
+    "groupId": "buongB",
+    "grudges": [],
+    "code": "TN-0742",
+    "inventory": {
+      "bag": [
+        "plastic",
+        "sugar"
+      ],
+      "weapon": null,
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_dat",
+    "name": "Đạt Lì",
+    "personality": "hothead",
+    "color": "#fb923c",
+    "sells": [
+      {
+        "itemId": "metal_scrap",
+        "price": 10
+      },
+      {
+        "itemId": "wood",
+        "price": 8
+      },
+      {
+        "itemId": "pipe",
+        "price": 55
+      }
+    ],
+    "tips": [
+      {
+        "text": "Mặc đồng phục mà đứng sát lính là lộ ngay.",
+        "true": true
+      }
+    ],
+    "aggression": 0.9,
+    "courage": 0.85,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-0779",
+    "inventory": {
+      "bag": [
+        "metal_scrap"
+      ],
+      "weapon": "club",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  },
+  {
+    "id": "npc_tien",
+    "name": "Tiến Chột",
+    "personality": "greedy",
+    "color": "#a78bfa",
+    "sells": [
+      {
+        "itemId": "file",
+        "price": 28
+      },
+      {
+        "itemId": "wire",
+        "price": 9
+      },
+      {
+        "itemId": "shiv",
+        "price": 38
+      }
+    ],
+    "tips": [
+      {
+        "text": "Đồ giấu sau bồn cầu an toàn hơn dưới nệm.",
+        "true": true
+      },
+      {
+        "text": "Cổng xe tải không cần thẻ, chỉ cần đồng phục.",
+        "true": false
+      },
+      {
+        "text": "Mật lệnh cai ngục là 'Đá Xám' — à không, 'Đá Đen' mới đúng.",
+        "true": false
+      }
+    ],
+    "aggression": 0.5,
+    "courage": 0.5,
+    "groupId": "choden",
+    "grudges": [],
+    "code": "TN-0707",
+    "inventory": {
+      "bag": [
+        "file",
+        "wire"
+      ],
+      "weapon": "shiv",
+      "outfit": "prisoner_outfit"
+    },
+    "knockoutHp": 40,
+    "recoveryTime": 30
+  }
+]

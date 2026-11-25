@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  BotLevel,
   MONOPOLY_MAX_PLAYERS,
   PublicRoom,
   Room,
@@ -11,6 +12,7 @@ import {
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const CODE_LENGTH = 6;
 const MAX_CHAT_HISTORY = 50;
+const BOT_NAMES = ['Bot Tí', 'Bot Sửu', 'Bot Dần', 'Bot Mão'];
 
 export const DEFAULT_SETTINGS: RoomSettings = {
   isPrivate: false,
@@ -71,6 +73,7 @@ export class MonopolyRoomService {
           ready: p.ready,
           connected: p.connected,
           joinedAt: p.joinedAt,
+          ...(p.botLevel ? { botLevel: p.botLevel } : {}),
         })),
     };
   }
@@ -131,6 +134,39 @@ export class MonopolyRoomService {
     return player;
   }
 
+  /** Thêm 1 bot vào ghế trống (luôn sẵn sàng, không có socket) */
+  addBot(room: Room, level: BotLevel, seat?: number): RoomPlayer | null {
+    const taken = new Set(room.players.map((p) => p.seat));
+    const s =
+      seat !== undefined &&
+      Number.isInteger(seat) &&
+      seat >= 0 &&
+      seat < MONOPOLY_MAX_PLAYERS &&
+      !taken.has(seat)
+        ? seat
+        : this.firstFreeSeat(room);
+    if (s < 0) return null;
+    const usedNames = new Set(room.players.map((p) => p.name));
+    const name =
+      BOT_NAMES.find((n) => !usedNames.has(n)) ?? `Bot ${room.players.length}`;
+    const bot: RoomPlayer = {
+      userId: `bot:${room.code}:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
+      name,
+      seat: s,
+      ready: true,
+      connected: true,
+      socketId: null,
+      joinedAt: Date.now(),
+      botLevel: level,
+    };
+    room.players.push(bot);
+    return bot;
+  }
+
+  humanCount(room: Room) {
+    return room.players.filter((p) => !p.botLevel).length;
+  }
+
   findPlayer(room: Room, userId: string) {
     return room.players.find((p) => p.userId === userId);
   }
@@ -140,7 +176,8 @@ export class MonopolyRoomService {
     room.players = room.players.filter((p) => p.userId !== userId);
     if (this.userRoom.get(userId) === room.code) this.userRoom.delete(userId);
 
-    if (room.players.length === 0) {
+    // Không còn người thật (chỉ còn bot) -> xoá phòng
+    if (this.humanCount(room) === 0) {
       this.rooms.delete(room.code);
       return true;
     }
@@ -154,7 +191,7 @@ export class MonopolyRoomService {
   /** Chuyển quyền host cho người đang kết nối có ghế nhỏ nhất */
   transferHost(room: Room): RoomPlayer | undefined {
     const candidates = room.players
-      .filter((p) => p.userId !== room.hostId)
+      .filter((p) => p.userId !== room.hostId && !p.botLevel)
       .sort(
         (a, b) => Number(b.connected) - Number(a.connected) || a.seat - b.seat,
       );
@@ -201,6 +238,6 @@ export class MonopolyRoomService {
   resetToLobby(room: Room) {
     room.status = 'lobby';
     room.snapshot = null;
-    room.players.forEach((p) => (p.ready = false));
+    room.players.forEach((p) => (p.ready = !!p.botLevel));
   }
 }

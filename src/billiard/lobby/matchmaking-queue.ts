@@ -4,7 +4,6 @@
  * Chạy nhiều instance: thay bằng hàng chờ dùng chung (Redis) theo cùng giao diện.
  */
 import { RANKING_CONFIG as R } from './ranking.config';
-import { searchRange } from './ranking';
 
 export type QueueMode = 'QUICK' | 'RANKED';
 
@@ -85,7 +84,10 @@ export class MatchmakingQueue {
     return this.queue.delete(userId);
   }
 
-  /** Ghép cặp: ưu tiên người chờ lâu nhất, chọn đối thủ cùng chế độ / luật, rating gần nhất trong khoảng cho phép của CẢ HAI */
+  /**
+   * Ghép cặp theo thứ tự vào hàng chờ: người chờ lâu nhất gặp người chờ lâu kế tiếp cùng chế độ / luật.
+   * KHÔNG lọc theo trình độ (rating chỉ dùng để tính điểm sau trận).
+   */
   tick(now: number): PendingMatch[] {
     const created: PendingMatch[] = [];
     const waiting = [...this.queue.values()].sort(
@@ -94,21 +96,14 @@ export class MatchmakingQueue {
     const used = new Set<string>();
     for (const a of waiting) {
       if (used.has(a.userId)) continue;
-      const rangeA = searchRange((now - a.joinedAt) / 1000);
-      let best: QueueEntry | null = null;
-      for (const b of waiting) {
-        if (
-          b.userId === a.userId ||
-          used.has(b.userId) ||
-          b.mode !== a.mode ||
-          b.ruleSet !== a.ruleSet
-        )
-          continue;
-        const diff = Math.abs(a.rating - b.rating);
-        const rangeB = searchRange((now - b.joinedAt) / 1000);
-        if (diff > Math.min(rangeA, rangeB)) continue;
-        if (!best || diff < Math.abs(a.rating - best.rating)) best = b;
-      }
+      const best =
+        waiting.find(
+          (b) =>
+            b.userId !== a.userId &&
+            !used.has(b.userId) &&
+            b.mode === a.mode &&
+            b.ruleSet === a.ruleSet,
+        ) ?? null;
       if (!best) continue;
       used.add(a.userId).add(best.userId);
       this.queue.delete(a.userId);

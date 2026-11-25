@@ -18,7 +18,12 @@ export interface RoomPlayer {
   connected: boolean;
   socketId: string | null;
   joinedAt: number;
+  /** Bot (máy chơi, do host điều khiển) — có giá trị là độ khó */
+  botLevel?: BotLevel;
 }
+
+export type BotLevel = 'easy' | 'normal' | 'hard';
+export const BOT_LEVELS: BotLevel[] = ['easy', 'normal', 'hard'];
 
 export interface RoomChatMessage {
   id: string;

@@ -1,0 +1,12 @@
+{
+  "showHints": false,
+  "hotkeys": {
+    "stats": "C",
+    "map": "M",
+    "inventory": "I",
+    "journal": "Tab"
+  },
+  "pauseOnPopup": false,
+  "toastSeconds": 2.5,
+  "maxToasts": 3
+}

@@ -1,0 +1,108 @@
+{
+  "_doc": "Vai trò công cụ: dig (cấp đào + hiệu quả theo loại ô), pry (cậy lưới gió / phá tủ), cut (cắt rào), pick (mở khoá). efficiency chia vào thời gian thao tác; noise > 0 thì cai ngục trong bán kính đó nghe thấy.",
+  "sharpened_spoon": {
+    "dig": {
+      "power": 1,
+      "wall": 0.6,
+      "floor": 0.6,
+      "tunnel": 0.6
+    }
+  },
+  "shovel": {
+    "dig": {
+      "power": 2,
+      "wall": 0.8,
+      "floor": 1,
+      "tunnel": 1
+    }
+  },
+  "reinforced_shovel": {
+    "dig": {
+      "power": 2,
+      "wall": 0.9,
+      "floor": 1.6,
+      "tunnel": 1.6
+    }
+  },
+  "pickaxe": {
+    "dig": {
+      "power": 2,
+      "wall": 1.4,
+      "floor": 0.6,
+      "tunnel": 0.6
+    }
+  },
+  "improved_pickaxe": {
+    "dig": {
+      "power": 3,
+      "wall": 2.2,
+      "floor": 0.7,
+      "tunnel": 0.7
+    }
+  },
+  "multitool": {
+    "dig": {
+      "power": 1,
+      "wall": 0.6,
+      "floor": 0.6,
+      "tunnel": 0.6
+    },
+    "pry": {
+      "efficiency": 0.8,
+      "noise": 0
+    },
+    "cut": {
+      "efficiency": 0.6
+    },
+    "pick": {
+      "efficiency": 0.8
+    }
+  },
+  "screwdriver": {
+    "pry": {
+      "efficiency": 1,
+      "noise": 0
+    }
+  },
+  "shiv": {
+    "pry": {
+      "efficiency": 0.8,
+      "noise": 0
+    }
+  },
+  "crowbar": {
+    "pry": {
+      "efficiency": 2,
+      "noise": 4
+    }
+  },
+  "wire_cutters": {
+    "cut": {
+      "efficiency": 1
+    }
+  },
+  "improved_cutters": {
+    "cut": {
+      "efficiency": 2
+    }
+  },
+  "lockpick": {
+    "pick": {
+      "efficiency": 1
+    }
+  },
+  "improved_lockpick": {
+    "pick": {
+      "efficiency": 1.6
+    }
+  },
+  "repairKit": {
+    "restoreFraction": 0.5
+  },
+  "storagePouchBonusSlots": 2,
+  "firecracker": {
+    "throwDistance": 4,
+    "alertRadius": 9
+  },
+  "mapSketchSeconds": 90
+}

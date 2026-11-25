@@ -1,0 +1,5209 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.10.2",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "infinite": false,
+ "width": 46,
+ "height": 34,
+ "tilewidth": 32,
+ "tileheight": 32,
+ "nextlayerid": 10,
+ "nextobjectid": 140,
+ "properties": [
+  {
+   "name": "id",
+   "type": "string",
+   "value": "blackstone"
+  },
+  {
+   "name": "name",
+   "type": "string",
+   "value": "Trại giam Hắc Thạch"
+  }
+ ],
+ "tilesets": [
+  {
+   "firstgid": 1,
+   "name": "blackstone",
+   "tilewidth": 32,
+   "tileheight": 32,
+   "tilecount": 22,
+   "columns": 22,
+   "image": "blackstone-tiles.png",
+   "imagewidth": 704,
+   "imageheight": 32,
+   "margin": 0,
+   "spacing": 0,
+   "tiles": [
+    {
+     "id": 0,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "#"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Tường"
+      }
+     ]
+    },
+    {
+     "id": 1,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "."
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Sàn"
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": ","
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Sân cỏ"
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "o"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bên ngoài"
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "d"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Cửa mở"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "L"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Cửa khóa (Chìa khóa giả)"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "R"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Cửa biệt giam"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "V"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Nắp ống thông gió"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "W"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Tường trèo được"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "b"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Giường"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "="
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bàn"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "k"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Tủ / thùng lục soát"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "B"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bàn chế tạo"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "S"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Kho nhóm"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "$"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Quầy căng tin"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "t"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bồn cầu"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "J"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Máy làm việc"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "P"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bảng điều khiển"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "G"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Cổng phụ"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "x"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Bụi cây"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "g"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Máy tập gym"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "properties": [
+      {
+       "name": "ch",
+       "type": "string",
+       "value": "s"
+      },
+      {
+       "name": "name",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "layers": [
+  {
+   "id": 1,
+   "name": "ground",
+   "type": "tilelayer",
+   "width": 46,
+   "height": 34,
+   "data": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    10,
+    2,
+    12,
+    1,
+    10,
+    2,
+    12,
+    1,
+    10,
+    2,
+    12,
+    1,
+    10,
+    2,
+    12,
+    1,
+    2,
+    2,
+    1,
+    2,
+    2,
+    1,
+    1,
+    12,
+    2,
+    2,
+    18,
+    2,
+    12,
+    1,
+    2,
+    2,
+    2,
+    2,
+    15,
+    15,
+    2,
+    2,
+    2,
+    12,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    1,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    16,
+    1,
+    2,
+    2,
+    16,
+    1,
+    2,
+    2,
+    16,
+    1,
+    2,
+    2,
+    16,
+    1,
+    1,
+    7,
+    1,
+    7,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    5,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    14,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    12,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    12,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    12,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    11,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    8,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    17,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    12,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    19,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    19,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    10,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    17,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    12,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    21,
+    2,
+    21,
+    2,
+    21,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    20,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    21,
+    2,
+    21,
+    2,
+    21,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    2,
+    22,
+    2,
+    22,
+    2,
+    22,
+    2,
+    22,
+    2,
+    22,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    10,
+    2,
+    10,
+    2,
+    10,
+    2,
+    10,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    9,
+    9,
+    9,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 2,
+   "name": "zones",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 1,
+     "name": "cell_0",
+     "type": "zone",
+     "x": 96,
+     "y": 96,
+     "width": 96,
+     "height": 96,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng giam 1"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "name": "cell_1",
+     "type": "zone",
+     "x": 224,
+     "y": 96,
+     "width": 96,
+     "height": 96,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng giam 2"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "name": "cell_2",
+     "type": "zone",
+     "x": 352,
+     "y": 96,
+     "width": 96,
+     "height": 96,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng giam 3"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "cell_3",
+     "type": "zone",
+     "x": 480,
+     "y": 96,
+     "width": 96,
+     "height": 96,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng giam 4"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "solitary_0",
+     "type": "zone",
+     "x": 608,
+     "y": 96,
+     "width": 64,
+     "height": 64,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Biệt giam A"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "solitary_1",
+     "type": "zone",
+     "x": 704,
+     "y": 96,
+     "width": 64,
+     "height": 64,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Biệt giam B"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "solitary",
+     "type": "zone",
+     "x": 608,
+     "y": 160,
+     "width": 160,
+     "height": 64,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Khu biệt giam"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "guardroom",
+     "type": "zone",
+     "x": 832,
+     "y": 96,
+     "width": 192,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng bảo vệ"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "canteen",
+     "type": "zone",
+     "x": 1024,
+     "y": 96,
+     "width": 352,
+     "height": 320,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Nhà ăn"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "workshop",
+     "type": "zone",
+     "x": 96,
+     "y": 320,
+     "width": 352,
+     "height": 288,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Xưởng"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "library",
+     "type": "zone",
+     "x": 480,
+     "y": 320,
+     "width": 224,
+     "height": 288,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Thư viện"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "laundry",
+     "type": "zone",
+     "x": 96,
+     "y": 608,
+     "width": 352,
+     "height": 224,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng giặt"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "infirmary",
+     "type": "zone",
+     "x": 480,
+     "y": 608,
+     "width": 224,
+     "height": 224,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng y tế"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "dorm",
+     "type": "zone",
+     "x": 736,
+     "y": 800,
+     "width": 224,
+     "height": 192,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Buồng B"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "yard",
+     "type": "zone",
+     "x": 736,
+     "y": 448,
+     "width": 640,
+     "height": 544,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Sân tập"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "hall",
+     "type": "zone",
+     "x": 96,
+     "y": 192,
+     "width": 928,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Hành lang"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "hall_south",
+     "type": "zone",
+     "x": 832,
+     "y": 320,
+     "width": 160,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Hành lang"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "outside",
+     "type": "zone",
+     "x": 0,
+     "y": 0,
+     "width": 1472,
+     "height": 1088,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bên ngoài"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 131,
+     "name": "shower",
+     "type": "zone",
+     "x": 96,
+     "y": 832,
+     "width": 352,
+     "height": 160,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Phòng tắm"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 132,
+     "name": "gym",
+     "type": "zone",
+     "x": 480,
+     "y": 832,
+     "width": 224,
+     "height": 160,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Khu gym"
+      },
+      {
+       "name": "restricted",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "areas",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 19,
+     "name": "rollcall",
+     "type": "area",
+     "x": 992,
+     "y": 480,
+     "width": 256,
+     "height": 128,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vạch điểm danh"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "interactables",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 20,
+     "name": "desk_0",
+     "type": "container",
+     "x": 160,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bàn phòng 1"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "spoon,cloth,plastic,clothes"
+      },
+      {
+       "name": "slots",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "refill",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "toilet_0",
+     "type": "hideSpot",
+     "x": 160,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Sau bồn cầu (phòng 1)"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.7
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 0
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "bedrest_0",
+     "type": "bed",
+     "x": 96,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường phòng 1"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 0
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "tunnel_0",
+     "type": "tunnelSpot",
+     "x": 96,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Góc sàn đào được (phòng 1)"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "desk_1",
+     "type": "container",
+     "x": 288,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bàn phòng 2"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "spoon,cloth,plastic,clothes"
+      },
+      {
+       "name": "slots",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "refill",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "toilet_1",
+     "type": "hideSpot",
+     "x": 288,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Sau bồn cầu (phòng 2)"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.7
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 1
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "bedrest_1",
+     "type": "bed",
+     "x": 224,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường phòng 2"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 1
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "tunnel_1",
+     "type": "tunnelSpot",
+     "x": 224,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Góc sàn đào được (phòng 2)"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "desk_2",
+     "type": "container",
+     "x": 416,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bàn phòng 3"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "spoon,cloth,plastic,clothes"
+      },
+      {
+       "name": "slots",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "refill",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 32,
+     "name": "toilet_2",
+     "type": "hideSpot",
+     "x": 416,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Sau bồn cầu (phòng 3)"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.7
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 2
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 33,
+     "name": "bedrest_2",
+     "type": "bed",
+     "x": 352,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường phòng 3"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 2
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 34,
+     "name": "tunnel_2",
+     "type": "tunnelSpot",
+     "x": 352,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Góc sàn đào được (phòng 3)"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 2
+      }
+     ]
+    },
+    {
+     "id": 35,
+     "name": "desk_3",
+     "type": "container",
+     "x": 544,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bàn phòng 4"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "spoon,cloth,plastic,clothes"
+      },
+      {
+       "name": "slots",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "refill",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 37,
+     "name": "toilet_3",
+     "type": "hideSpot",
+     "x": 544,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Sau bồn cầu (phòng 4)"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.7
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 3
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 38,
+     "name": "bedrest_3",
+     "type": "bed",
+     "x": 480,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường phòng 4"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 3
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 39,
+     "name": "tunnel_3",
+     "type": "tunnelSpot",
+     "x": 480,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Góc sàn đào được (phòng 4)"
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": 3
+      }
+     ]
+    },
+    {
+     "id": 40,
+     "name": "sol_door_0",
+     "type": "solitaryDoor",
+     "x": 640,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Cửa biệt giam A"
+      },
+      {
+       "name": "solitaryIndex",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 41,
+     "name": "sol_door_1",
+     "type": "solitaryDoor",
+     "x": 704,
+     "y": 160,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Cửa biệt giam B"
+      },
+      {
+       "name": "solitaryIndex",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 42,
+     "name": "camera_panel",
+     "type": "cameraPanel",
+     "x": 928,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bảng điều khiển camera"
+      }
+     ]
+    },
+    {
+     "id": 43,
+     "name": "locker_0",
+     "type": "container",
+     "x": 832,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Tủ bảo vệ"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "screwdriver,file,keycard"
+      }
+     ]
+    },
+    {
+     "id": 44,
+     "name": "locker_1",
+     "type": "container",
+     "x": 992,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Tủ đồ tịch thu"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "file,food,lockpick,baton"
+      }
+     ]
+    },
+    {
+     "id": 45,
+     "name": "shop",
+     "type": "shop",
+     "x": 1184,
+     "y": 96,
+     "width": 64,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Quầy căng tin"
+      }
+     ]
+    },
+    {
+     "id": 46,
+     "name": "pantry",
+     "type": "container",
+     "x": 1344,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kho bếp"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "food,food,plastic,sugar,flour"
+      }
+     ]
+    },
+    {
+     "id": 47,
+     "name": "canteen_bin",
+     "type": "container",
+     "x": 1056,
+     "y": 384,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Thùng rác nhà ăn"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "plastic,spoon,food,sugar"
+      }
+     ]
+    },
+    {
+     "id": 49,
+     "name": "job_plates",
+     "type": "job",
+     "x": 352,
+     "y": 512,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy dập biển số"
+      },
+      {
+       "name": "zone",
+       "type": "string",
+       "value": "workshop"
+      }
+     ]
+    },
+    {
+     "id": 50,
+     "name": "toolbox_0",
+     "type": "container",
+     "x": 96,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Hộp dụng cụ"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "metal_scrap,wire,file"
+      }
+     ]
+    },
+    {
+     "id": 51,
+     "name": "toolbox_1",
+     "type": "container",
+     "x": 416,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Thùng phế liệu"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "metal_scrap,plastic,wire"
+      }
+     ]
+    },
+    {
+     "id": 52,
+     "name": "lumber",
+     "type": "container",
+     "x": 416,
+     "y": 576,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Đống gỗ vụn"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "wood,wood,metal_scrap"
+      }
+     ]
+    },
+    {
+     "id": 53,
+     "name": "vent",
+     "type": "vent",
+     "x": 64,
+     "y": 512,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Nắp ống thông gió"
+      }
+     ]
+    },
+    {
+     "id": 54,
+     "name": "shelf_0",
+     "type": "container",
+     "x": 480,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "wire,plastic"
+      }
+     ]
+    },
+    {
+     "id": 55,
+     "name": "shelf_1",
+     "type": "container",
+     "x": 672,
+     "y": 576,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ hồ sơ"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "wire,cloth"
+      }
+     ]
+    },
+    {
+     "id": 56,
+     "name": "book_0",
+     "type": "hideSpot",
+     "x": 576,
+     "y": 448,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Cuốn sách khoét rỗng"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.55
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": -1
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 57,
+     "name": "job_laundry",
+     "type": "job",
+     "x": 256,
+     "y": 736,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy giặt công nghiệp"
+      },
+      {
+       "name": "zone",
+       "type": "string",
+       "value": "laundry"
+      }
+     ]
+    },
+    {
+     "id": 58,
+     "name": "washer_0",
+     "type": "container",
+     "x": 96,
+     "y": 640,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy giặt"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "cloth,cloth,guard_top,guard_bottom,pillow,blanket,clothes"
+      }
+     ]
+    },
+    {
+     "id": 59,
+     "name": "washer_1",
+     "type": "container",
+     "x": 416,
+     "y": 768,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giỏ đồ bẩn"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "cloth,cloth,wire,pillow,blanket,clothes"
+      }
+     ]
+    },
+    {
+     "id": 60,
+     "name": "med_cabinet",
+     "type": "container",
+     "x": 672,
+     "y": 640,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Tủ thuốc"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "bandage,bandage,food,pillow"
+      }
+     ]
+    },
+    {
+     "id": 61,
+     "name": "crate_0",
+     "type": "container",
+     "x": 672,
+     "y": 768,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Thùng hàng"
+      },
+      {
+       "name": "loot",
+       "type": "string",
+       "value": "metal_scrap,wire,wood"
+      }
+     ]
+    },
+    {
+     "id": 62,
+     "name": "stash",
+     "type": "stash",
+     "x": 96,
+     "y": 288,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kho nhóm (hốc tường cuối hành lang)"
+      }
+     ]
+    },
+    {
+     "id": 63,
+     "name": "bush_0",
+     "type": "hideSpot",
+     "x": 1312,
+     "y": 896,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Bụi cây góc sân"
+      },
+      {
+       "name": "safety",
+       "type": "float",
+       "value": 0.5
+      },
+      {
+       "name": "cellIndex",
+       "type": "int",
+       "value": -1
+      },
+      {
+       "name": "capacity",
+       "type": "int",
+       "value": 4
+      }
+     ]
+    },
+    {
+     "id": 64,
+     "name": "wall",
+     "type": "wall",
+     "x": 1056,
+     "y": 992,
+     "width": 96,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Tường rào sân"
+      }
+     ]
+    },
+    {
+     "id": 65,
+     "name": "gate",
+     "type": "gate",
+     "x": 1376,
+     "y": 640,
+     "width": 32,
+     "height": 64,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Cổng phụ (xe tải)"
+      }
+     ]
+    },
+    {
+     "id": 111,
+     "name": "bedrest_dorm_0",
+     "type": "bed",
+     "x": 736,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường buồng B (1)"
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 112,
+     "name": "bedrest_dorm_1",
+     "type": "bed",
+     "x": 800,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường buồng B (2)"
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 113,
+     "name": "bedrest_dorm_2",
+     "type": "bed",
+     "x": 864,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường buồng B (3)"
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 114,
+     "name": "bedrest_dorm_3",
+     "type": "bed",
+     "x": 928,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường buồng B (4)"
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 115,
+     "name": "bedrest_infirm",
+     "type": "bed",
+     "x": 480,
+     "y": 704,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Giường phòng y tế"
+      },
+      {
+       "name": "bed",
+       "type": "bool",
+       "value": true
+      },
+      {
+       "name": "canStore",
+       "type": "bool",
+       "value": false
+      },
+      {
+       "name": "canHideUnder",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 116,
+     "name": "shower_0",
+     "type": "shower",
+     "x": 128,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    },
+    {
+     "id": 117,
+     "name": "shower_1",
+     "type": "shower",
+     "x": 192,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    },
+    {
+     "id": 118,
+     "name": "shower_2",
+     "type": "shower",
+     "x": 256,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    },
+    {
+     "id": 119,
+     "name": "shower_3",
+     "type": "shower",
+     "x": 320,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    },
+    {
+     "id": 120,
+     "name": "shower_4",
+     "type": "shower",
+     "x": 384,
+     "y": 960,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Vòi sen"
+      }
+     ]
+    },
+    {
+     "id": 121,
+     "name": "gym_0",
+     "type": "gym",
+     "x": 512,
+     "y": 864,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 122,
+     "name": "gym_1",
+     "type": "gym",
+     "x": 576,
+     "y": 864,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 123,
+     "name": "gym_2",
+     "type": "gym",
+     "x": 640,
+     "y": 864,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 124,
+     "name": "gym_3",
+     "type": "gym",
+     "x": 512,
+     "y": 928,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 125,
+     "name": "gym_4",
+     "type": "gym",
+     "x": 576,
+     "y": 928,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 126,
+     "name": "gym_5",
+     "type": "gym",
+     "x": 640,
+     "y": 928,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Máy tập"
+      }
+     ]
+    },
+    {
+     "id": 133,
+     "name": "bookshelf_0",
+     "type": "bookshelf",
+     "x": 512,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách lịch sử"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "history"
+      }
+     ]
+    },
+    {
+     "id": 134,
+     "name": "bookshelf_1",
+     "type": "bookshelf",
+     "x": 544,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách khoa học"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "science"
+      }
+     ]
+    },
+    {
+     "id": 135,
+     "name": "bookshelf_2",
+     "type": "bookshelf",
+     "x": 608,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách cơ khí"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "mechanics"
+      }
+     ]
+    },
+    {
+     "id": 136,
+     "name": "bookshelf_3",
+     "type": "bookshelf",
+     "x": 640,
+     "y": 352,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách luật"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "law"
+      }
+     ]
+    },
+    {
+     "id": 137,
+     "name": "bookshelf_4",
+     "type": "bookshelf",
+     "x": 512,
+     "y": 544,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách y học"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "medicine"
+      }
+     ]
+    },
+    {
+     "id": 138,
+     "name": "bookshelf_5",
+     "type": "bookshelf",
+     "x": 640,
+     "y": 544,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Kệ sách văn học"
+      },
+      {
+       "name": "topic",
+       "type": "string",
+       "value": "literature"
+      }
+     ]
+    },
+    {
+     "id": 139,
+     "name": "evidence_locker",
+     "type": "evidenceLocker",
+     "x": 960,
+     "y": 96,
+     "width": 32,
+     "height": 32,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "label",
+       "type": "string",
+       "value": "Tủ tang vật (đồ tịch thu)"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "spawns",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 66,
+     "name": "cell_0",
+     "type": "cell",
+     "x": 144,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 67,
+     "name": "cell_1",
+     "type": "cell",
+     "x": 272,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 68,
+     "name": "cell_2",
+     "type": "cell",
+     "x": 400,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 2
+      }
+     ]
+    },
+    {
+     "id": 69,
+     "name": "cell_3",
+     "type": "cell",
+     "x": 528,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 3
+      }
+     ]
+    },
+    {
+     "id": 70,
+     "name": "solitaryInside_0",
+     "type": "solitaryInside",
+     "x": 640,
+     "y": 128,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 71,
+     "name": "solitaryInside_1",
+     "type": "solitaryInside",
+     "x": 736,
+     "y": 128,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 72,
+     "name": "solitaryRelease_0",
+     "type": "solitaryRelease",
+     "x": 656,
+     "y": 208,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 73,
+     "name": "solitaryRelease_1",
+     "type": "solitaryRelease",
+     "x": 720,
+     "y": 208,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 74,
+     "name": "inmate_0",
+     "type": "inmate",
+     "x": 752,
+     "y": 937.6,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 0
+      }
+     ]
+    },
+    {
+     "id": 75,
+     "name": "inmate_1",
+     "type": "inmate",
+     "x": 816,
+     "y": 937.6,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 1
+      }
+     ]
+    },
+    {
+     "id": 76,
+     "name": "inmate_2",
+     "type": "inmate",
+     "x": 880,
+     "y": 937.6,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 2
+      }
+     ]
+    },
+    {
+     "id": 77,
+     "name": "inmate_3",
+     "type": "inmate",
+     "x": 944,
+     "y": 937.6,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "index",
+       "type": "int",
+       "value": 3
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 6,
+   "name": "guard_routes",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 78,
+     "name": "hall",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 144,
+       "y": 272
+      },
+      {
+       "x": 688,
+       "y": 240
+      },
+      {
+       "x": 688,
+       "y": 208
+      },
+      {
+       "x": 688,
+       "y": 272
+      },
+      {
+       "x": 976,
+       "y": 272
+      }
+     ]
+    },
+    {
+     "id": 79,
+     "name": "canteen",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 1104,
+       "y": 144
+      },
+      {
+       "x": 1328,
+       "y": 144
+      },
+      {
+       "x": 1328,
+       "y": 368
+      },
+      {
+       "x": 1104,
+       "y": 368
+      }
+     ]
+    },
+    {
+     "id": 80,
+     "name": "yard",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 1008,
+       "y": 496
+      },
+      {
+       "x": 1328,
+       "y": 496
+      },
+      {
+       "x": 1328,
+       "y": 784
+      },
+      {
+       "x": 1040,
+       "y": 720
+      }
+     ]
+    },
+    {
+     "id": 81,
+     "name": "guardroom",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 880,
+       "y": 144
+      },
+      {
+       "x": 976,
+       "y": 144
+      }
+     ]
+    },
+    {
+     "id": 82,
+     "name": "workshop",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 144,
+       "y": 400
+      },
+      {
+       "x": 400,
+       "y": 400
+      },
+      {
+       "x": 400,
+       "y": 560
+      },
+      {
+       "x": 144,
+       "y": 560
+      }
+     ]
+    },
+    {
+     "id": 83,
+     "name": "library",
+     "type": "route",
+     "x": 0,
+     "y": 0,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "polyline": [
+      {
+       "x": 528,
+       "y": 400
+      },
+      {
+       "x": 656,
+       "y": 560
+      },
+      {
+       "x": 592,
+       "y": 720.0
+      },
+      {
+       "x": 528,
+       "y": 784
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 7,
+   "name": "exits",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 84,
+     "name": "exit_vent",
+     "type": "exit",
+     "x": 32,
+     "y": 528,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "method",
+       "type": "string",
+       "value": "VENT"
+      }
+     ]
+    },
+    {
+     "id": 85,
+     "name": "exit_wall",
+     "type": "exit",
+     "x": 1104,
+     "y": 1043.2,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "method",
+       "type": "string",
+       "value": "WALL"
+      }
+     ]
+    },
+    {
+     "id": 86,
+     "name": "exit_gate",
+     "type": "exit",
+     "x": 1427.2,
+     "y": 672,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "method",
+       "type": "string",
+       "value": "GATE"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 8,
+   "name": "lights",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 87,
+     "name": "light_0",
+     "type": "light",
+     "x": 144,
+     "y": 134.4,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 2.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 88,
+     "name": "light_1",
+     "type": "light",
+     "x": 272,
+     "y": 134.4,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 2.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 89,
+     "name": "light_2",
+     "type": "light",
+     "x": 400,
+     "y": 134.4,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 2.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 90,
+     "name": "light_3",
+     "type": "light",
+     "x": 528,
+     "y": 134.4,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 2.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 91,
+     "name": "light_4",
+     "type": "light",
+     "x": 256,
+     "y": 256,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 92,
+     "name": "light_5",
+     "type": "light",
+     "x": 512,
+     "y": 256,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 93,
+     "name": "light_6",
+     "type": "light",
+     "x": 768,
+     "y": 256,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 94,
+     "name": "light_7",
+     "type": "light",
+     "x": 1184,
+     "y": 240,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 95,
+     "name": "light_8",
+     "type": "light",
+     "x": 864,
+     "y": 512,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 96,
+     "name": "light_9",
+     "type": "light",
+     "x": 1184,
+     "y": 512,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 97,
+     "name": "light_10",
+     "type": "light",
+     "x": 1056,
+     "y": 704,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 98,
+     "name": "light_11",
+     "type": "light",
+     "x": 1280,
+     "y": 832,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 99,
+     "name": "light_12",
+     "type": "light",
+     "x": 1088,
+     "y": 928,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 100,
+     "name": "light_13",
+     "type": "light",
+     "x": 256,
+     "y": 416,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 101,
+     "name": "light_14",
+     "type": "light",
+     "x": 256,
+     "y": 736,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 102,
+     "name": "light_15",
+     "type": "light",
+     "x": 576,
+     "y": 416,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 103,
+     "name": "light_16",
+     "type": "light",
+     "x": 896,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 104,
+     "name": "light_17",
+     "type": "light",
+     "x": 576,
+     "y": 768,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 105,
+     "name": "light_18",
+     "type": "light",
+     "x": 832,
+     "y": 896,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 106,
+     "name": "light_19",
+     "type": "light",
+     "x": 1312,
+     "y": 672,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "radius",
+       "type": "float",
+       "value": 4.2
+      },
+      {
+       "name": "cell",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 9,
+   "name": "cameras",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "objects": [
+    {
+     "id": 107,
+     "name": "cam_guard",
+     "type": "camera",
+     "x": 1011.2,
+     "y": 179.2,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "angle",
+       "type": "int",
+       "value": 200
+      },
+      {
+       "name": "sweep",
+       "type": "int",
+       "value": 45
+      },
+      {
+       "name": "period",
+       "type": "int",
+       "value": 8
+      },
+      {
+       "name": "range",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "fov",
+       "type": "int",
+       "value": 50
+      }
+     ]
+    },
+    {
+     "id": 108,
+     "name": "cam_solitary",
+     "type": "camera",
+     "x": 780.8,
+     "y": 208,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "angle",
+       "type": "int",
+       "value": 180
+      },
+      {
+       "name": "sweep",
+       "type": "int",
+       "value": 25
+      },
+      {
+       "name": "period",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "range",
+       "type": "float",
+       "value": 5.5
+      },
+      {
+       "name": "fov",
+       "type": "int",
+       "value": 50
+      }
+     ]
+    },
+    {
+     "id": 109,
+     "name": "cam_yard",
+     "type": "camera",
+     "x": 1356.8,
+     "y": 460.8,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "angle",
+       "type": "int",
+       "value": 125
+      },
+      {
+       "name": "sweep",
+       "type": "int",
+       "value": 35
+      },
+      {
+       "name": "period",
+       "type": "int",
+       "value": 10
+      },
+      {
+       "name": "range",
+       "type": "int",
+       "value": 9
+      },
+      {
+       "name": "fov",
+       "type": "int",
+       "value": 45
+      }
+     ]
+    },
+    {
+     "id": 110,
+     "name": "cam_gate",
+     "type": "camera",
+     "x": 1356.8,
+     "y": 755.2,
+     "width": 0,
+     "height": 0,
+     "point": true,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "angle",
+       "type": "int",
+       "value": 230
+      },
+      {
+       "name": "sweep",
+       "type": "int",
+       "value": 30
+      },
+      {
+       "name": "period",
+       "type": "int",
+       "value": 7
+      },
+      {
+       "name": "range",
+       "type": "int",
+       "value": 6
+      },
+      {
+       "name": "fov",
+       "type": "int",
+       "value": 50
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ]
+}

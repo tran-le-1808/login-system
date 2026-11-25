@@ -1,0 +1,622 @@
+[
+  {
+    "id": "makeshift_rope",
+    "output": "makeshift_rope",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "blanket",
+        "quantity": 1
+      },
+      {
+        "itemId": "cloth",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "sharpened_spoon",
+    "output": "sharpened_spoon",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "spoon",
+        "quantity": 1
+      },
+      {
+        "itemId": "file",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "support",
+    "output": "support",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "id": "club",
+    "output": "club",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "wood",
+        "quantity": 2
+      },
+      {
+        "itemId": "cloth",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "energy_drink",
+    "output": "energy_drink",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "sugar",
+        "quantity": 1
+      },
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "shiv",
+    "output": "shiv",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "sharpened_spoon",
+        "quantity": 1
+      },
+      {
+        "itemId": "bandage",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "lockpick",
+    "output": "lockpick",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "wire",
+        "quantity": 1
+      },
+      {
+        "itemId": "metal_scrap",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "pipe",
+    "output": "pipe",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "metal_scrap",
+        "quantity": 2
+      },
+      {
+        "itemId": "cloth",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "energy_bar",
+    "output": "energy_bar",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "flour",
+        "quantity": 2
+      },
+      {
+        "itemId": "sugar",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "homemade_chocolate",
+    "output": "homemade_chocolate",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "sugar",
+        "quantity": 2
+      },
+      {
+        "itemId": "flour",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "fake_key",
+    "output": "fake_key",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      },
+      {
+        "itemId": "key_mold",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "cell_key",
+    "output": "cell_key",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      },
+      {
+        "itemId": "key_mold",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "dummy",
+    "output": "dummy",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "blanket",
+        "quantity": 1
+      },
+      {
+        "itemId": "pillow",
+        "quantity": 1
+      },
+      {
+        "itemId": "clothes",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "screwdriver",
+    "output": "screwdriver",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "metal_scrap",
+        "quantity": 1
+      },
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "shovel",
+    "output": "shovel",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "sharpened_spoon",
+        "quantity": 1
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "fake_keycard",
+    "output": "fake_keycard",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      },
+      {
+        "itemId": "ink",
+        "quantity": 1
+      },
+      {
+        "itemId": "photo",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "wire_cutters",
+    "output": "wire_cutters",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "metal_scrap",
+        "quantity": 2
+      },
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "rope",
+    "output": "rope",
+    "tier": 5,
+    "intelligenceRequired": 45,
+    "ingredients": [
+      {
+        "itemId": "makeshift_rope",
+        "quantity": 3
+      },
+      {
+        "itemId": "metal_scrap",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "jammer",
+    "output": "jammer",
+    "tier": 5,
+    "intelligenceRequired": 45,
+    "ingredients": [
+      {
+        "itemId": "wire",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      },
+      {
+        "itemId": "circuit_board",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "wall_picture",
+    "output": "wall_picture",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "photo",
+        "quantity": 1
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "floor_rug",
+    "output": "floor_rug",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "cloth",
+        "quantity": 1
+      },
+      {
+        "itemId": "blanket",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "metal_component",
+    "output": "metal_component",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "metal_scrap",
+        "quantity": 2
+      },
+      {
+        "itemId": "adhesive",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "storage_pouch",
+    "output": "storage_pouch",
+    "tier": 1,
+    "intelligenceRequired": 0,
+    "ingredients": [
+      {
+        "itemId": "cloth",
+        "quantity": 2
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "mechanical_component",
+    "output": "mechanical_component",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "gear_parts",
+        "quantity": 1
+      },
+      {
+        "itemId": "metal_component",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "electrical_component",
+    "output": "electrical_component",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "wire",
+        "quantity": 2
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "pickaxe",
+    "output": "pickaxe",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "metal_component",
+        "quantity": 1
+      },
+      {
+        "itemId": "wood",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "crowbar",
+    "output": "crowbar",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "metal_sheet",
+        "quantity": 1
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "repair_kit",
+    "output": "repair_kit",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "tape",
+        "quantity": 1
+      },
+      {
+        "itemId": "adhesive",
+        "quantity": 1
+      },
+      {
+        "itemId": "metal_scrap",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "firecracker",
+    "output": "firecracker",
+    "tier": 2,
+    "intelligenceRequired": 15,
+    "ingredients": [
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      },
+      {
+        "itemId": "battery",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "reinforced_material",
+    "output": "reinforced_material",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "metal_sheet",
+        "quantity": 1
+      },
+      {
+        "itemId": "metal_component",
+        "quantity": 1
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "reinforced_shovel",
+    "output": "reinforced_shovel",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "shovel",
+        "quantity": 1
+      },
+      {
+        "itemId": "reinforced_material",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "improved_lockpick",
+    "output": "improved_lockpick",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "lockpick",
+        "quantity": 1
+      },
+      {
+        "itemId": "mechanical_component",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "worker_outfit",
+    "output": "worker_outfit",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "clothes",
+        "quantity": 1
+      },
+      {
+        "itemId": "cloth",
+        "quantity": 2
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "map_sketch",
+    "output": "map_sketch",
+    "tier": 3,
+    "intelligenceRequired": 25,
+    "ingredients": [
+      {
+        "itemId": "ink",
+        "quantity": 1
+      },
+      {
+        "itemId": "photo",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "improved_pickaxe",
+    "output": "improved_pickaxe",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "pickaxe",
+        "quantity": 1
+      },
+      {
+        "itemId": "reinforced_material",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "improved_cutters",
+    "output": "improved_cutters",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "wire_cutters",
+        "quantity": 1
+      },
+      {
+        "itemId": "mechanical_component",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": "multitool",
+    "output": "multitool",
+    "tier": 4,
+    "intelligenceRequired": 35,
+    "ingredients": [
+      {
+        "itemId": "mechanical_component",
+        "quantity": 1
+      },
+      {
+        "itemId": "metal_component",
+        "quantity": 1
+      },
+      {
+        "itemId": "plastic",
+        "quantity": 1
+      },
+      {
+        "itemId": "tape",
+        "quantity": 1
+      }
+    ]
+  }
+]

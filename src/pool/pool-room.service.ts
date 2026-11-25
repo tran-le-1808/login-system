@@ -11,7 +11,11 @@ import {
   RoomPlayer,
   ShotRecord,
 } from './pool.types';
-import { configForPreset, POCKET_PRESETS } from './shared/physics/config';
+import {
+  configForTable,
+  isTableSize,
+  POCKET_PRESETS,
+} from './shared/physics/config';
 import { simulateShot } from './shared/physics/simulator';
 import { liftShot } from './shared/physics/clearance';
 import {
@@ -49,6 +53,7 @@ export const DEFAULT_SETTINGS: PoolRoomSettings = {
   raceTo: 3,
   breakRule: 'alternate',
   pocketPreset: 'wpa',
+  tableSize: '9ft',
   shotClock: true,
   allowFullGuide: false,
   autoCall: true,
@@ -248,6 +253,7 @@ export class PoolRoomService {
       n.breakRule = patch.breakRule;
     if (patch.pocketPreset && patch.pocketPreset in POCKET_PRESETS)
       n.pocketPreset = patch.pocketPreset;
+    if (isTableSize(patch.tableSize)) n.tableSize = patch.tableSize;
     for (const k of [
       'shotClock',
       'allowFullGuide',
@@ -259,6 +265,7 @@ export class PoolRoomService {
     // Xếp hạng: khoá preset WPA Thi đấu, tắt đường dự đoán đầy đủ, bật đồng hồ
     if (n.ranked) {
       n.pocketPreset = 'wpa';
+      n.tableSize = '9ft';
       n.allowFullGuide = false;
       n.shotClock = true;
     }
@@ -290,6 +297,7 @@ export class PoolRoomService {
       autoCall: s.autoCall,
       seed: Math.floor(Math.random() * 1e9),
       pocketPreset: s.pocketPreset,
+      tableSize: s.tableSize ?? '9ft',
       allowFullGuide: s.allowFullGuide,
     };
   }
@@ -435,6 +443,7 @@ export class PoolRoomService {
         v.value.x,
         v.value.y,
         r.ballInHand === 'kitchen',
+        r.size,
       )
     )
       return err('INVALID_PLACEMENT');
@@ -491,7 +500,10 @@ export class PoolRoomService {
    * server mô phỏng -> ShotResult -> trọng tài -> trạng thái mới.
    */
   shoot(room: Room, userId: string, raw: unknown): ShootResult {
-    const cfg = configForPreset(room.settings.pocketPreset);
+    const cfg = configForTable(
+      room.settings.pocketPreset,
+      room.settings.tableSize ?? '9ft',
+    );
     const v = validateShotInput(raw, cfg);
     if (!v.ok) return err(v.code);
     const input = v.value;
