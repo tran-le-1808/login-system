@@ -1,0 +1,81 @@
+{
+  "alwaysOpen": true,
+  "machines": {
+    "pressBench": {
+      "idPrefix": "press",
+      "name": "Máy đẩy tạ",
+      "countPerInmate": 1,
+      "stat": "strength",
+      "statName": "Sức mạnh",
+      "maxPoints": 50
+    },
+    "treadmill": {
+      "idPrefix": "tread",
+      "name": "Máy chạy bộ",
+      "countPerInmate": 1,
+      "stat": "agility",
+      "statName": "Nhanh nhẹn",
+      "maxPoints": 50
+    }
+  },
+  "clicksPerRep": [
+    {
+      "maxStat": 20,
+      "clicks": 10
+    },
+    {
+      "maxStat": 35,
+      "clicks": 12
+    },
+    {
+      "maxStat": 50,
+      "clicks": 15
+    }
+  ],
+  "strength": {
+    "hpPerPoint": 2,
+    "attackPerPoint": 0.02
+  },
+  "agility": {
+    "speedPerPoint": 0.01,
+    "maxSpeedMultiplier": 1.5,
+    "escapeBonusPerPoint": 0.0,
+    "actionTimeReductionMax": 0.2
+  },
+  "lowStaminaMultiplier": 1.2,
+  "weakEffectMultiplier": 1.1,
+  "weakHealthPct": 0.3,
+  "momentum": {
+    "gainPerPress": 0.08,
+    "fitnessGainBonusPer100": 1.0,
+    "decayPerSecond": 0.35,
+    "mistakeKeepPerFitness100": 0.5
+  },
+  "fitnessGainPerRep": 0.3,
+  "milestones": [
+    10,
+    20,
+    30,
+    40,
+    50
+  ],
+  "treadmillKmh": {
+    "base": 3,
+    "atFullMomentum": 12
+  },
+  "contest": {
+    "requestSeconds": 8,
+    "refuseReputationLoss": 4,
+    "aggressiveThreshold": 0.6
+  },
+  "npc": {
+    "repSeconds": [
+      4,
+      8
+    ]
+  },
+  "net": {
+    "pressMaxPerSecond": 16
+  },
+  "queueEnabled": false
+}

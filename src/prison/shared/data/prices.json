@@ -1,0 +1,19 @@
+{
+  "shop": [
+    { "itemId": "food", "basePrice": 10 },
+    { "itemId": "chocolate", "basePrice": 12 },
+    { "itemId": "energy_bar", "basePrice": 10 },
+    { "itemId": "condensed_milk", "basePrice": 7 },
+    { "itemId": "bandage", "basePrice": 14 },
+    { "itemId": "cloth", "basePrice": 5 },
+    { "itemId": "wood", "basePrice": 8 }
+  ],
+  "demandPerPurchase": 0.12,
+  "demandRecoveryPerGameHour": 0.04,
+  "maxDemand": 1.0,
+  "sellRatio": 0.5,
+  "socialDiscountPerPoint": 0.003,
+  "reputationDiscountPerPoint": 0.002,
+  "jobs": { "payPerShift": 9, "shiftSeconds": 8, "accidentChance": 0.04, "accidentDamage": 15 },
+  "cashContrabandThreshold": 60
+}

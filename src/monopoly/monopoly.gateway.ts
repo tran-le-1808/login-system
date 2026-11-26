@@ -15,6 +15,8 @@ import { MonopolyRoomService } from './monopoly-room.service';
 import { getIceServers } from '../realtime/ice-servers';
 import {
   AckResponse,
+  BOT_LEVELS,
+  BotLevel,
   MONOPOLY_MAX_PLAYERS,
   MONOPOLY_MIN_PLAYERS,
   PublicRoom,
@@ -368,6 +370,54 @@ export class MonopolyGateway implements OnGatewayDisconnect {
     return { ok: true };
   }
 
+  /** Chủ phòng thêm bot vào ghế trống (bot do máy chủ phòng điều khiển trong trận) */
+  @SubscribeMessage('mono:bot:add')
+  async handleAddBot(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { level?: string; seat?: number },
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room || room.hostId !== user.userId)
+      return { ok: false, error: 'Chỉ chủ phòng mới được thêm bot' };
+    if (room.status !== 'lobby')
+      return { ok: false, error: 'Trận đấu đã bắt đầu' };
+    if (room.players.length >= MONOPOLY_MAX_PLAYERS)
+      return { ok: false, error: 'Phòng đã đủ 4 người chơi' };
+    const level: BotLevel = BOT_LEVELS.includes(body?.level as BotLevel)
+      ? (body.level as BotLevel)
+      : 'normal';
+    const seat = typeof body?.seat === 'number' ? body.seat : undefined;
+    const bot = this.rooms.addBot(room, level, seat);
+    if (!bot) return { ok: false, error: 'Không còn ghế trống' };
+    this.notice(room, `🤖 ${bot.name} đã vào phòng`);
+    this.broadcastRoom(room);
+    return { ok: true };
+  }
+
+  /** Chủ phòng đổi độ khó của bot */
+  @SubscribeMessage('mono:bot:level')
+  async handleBotLevel(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { userId?: string; level?: string },
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (
+      !user ||
+      !room ||
+      room.hostId !== user.userId ||
+      room.status !== 'lobby'
+    )
+      return { ok: false, error: 'Chỉ chủ phòng mới được đổi' };
+    const bot = room.players.find((p) => p.userId === body?.userId);
+    if (!bot?.botLevel || !BOT_LEVELS.includes(body?.level as BotLevel))
+      return { ok: false, error: 'Bot không hợp lệ' };
+    bot.botLevel = body.level as BotLevel;
+    this.broadcastRoom(room);
+    return { ok: true };
+  }
+
   @SubscribeMessage('mono:ready')
   async handleReady(
     @ConnectedSocket() client: Socket,
@@ -528,6 +578,36 @@ export class MonopolyGateway implements OnGatewayDisconnect {
     const room = user && this.rooms.getRoomOfUser(user.userId);
     if (!user || !room) return { ok: false };
     return { ok: true, data: room.snapshot };
+  }
+
+  /**
+   * Báo xúc xắc vừa được lắc (chỉ để hiển thị): người lắc gửi kết quả ngay lúc
+   * xúc xắc bắt đầu xoay để người khác cũng thấy xúc xắc xoay & số nút.
+   * Host được báo thay cho bot / người chơi bị tự lắc khi hết giờ (forUserId).
+   */
+  @SubscribeMessage('mono:dice')
+  async handleDice(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { d1?: unknown; d2?: unknown; forUserId?: unknown },
+  ): Promise<AckResponse> {
+    const user = await this.getUser(client);
+    const room = user && this.rooms.getRoomOfUser(user.userId);
+    if (!user || !room || room.status !== 'playing') return { ok: false };
+    const isDie = (v: unknown): v is number =>
+      Number.isInteger(v) && (v as number) >= 1 && (v as number) <= 6;
+    if (!isDie(body?.d1) || !isDie(body?.d2)) return { ok: false };
+    let userId = user.userId;
+    if (typeof body.forUserId === 'string' && body.forUserId !== userId) {
+      if (room.hostId !== user.userId) return { ok: false };
+      if (!room.players.some((p) => p.userId === body.forUserId)) {
+        return { ok: false };
+      }
+      userId = body.forUserId;
+    }
+    client
+      .to(roomKey(room.code))
+      .emit('mono:dice', { userId, d1: body.d1, d2: body.d2 });
+    return { ok: true };
   }
 
   /** Người chơi gửi thao tác -> chuyển cho host xử lý */

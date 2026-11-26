@@ -1,0 +1,5 @@
+{
+  "_doc": "Thông số mặc định của camera (vị trí & hướng nằm ở lớp cameras của bản đồ). blindRadius: vùng mù ngay chân tường dưới camera (ô).",
+  "defaults": { "fov": 60, "range": 6, "period": 8, "sweep": 35, "blindRadius": 2 },
+  "blackoutSeconds": 90
+}

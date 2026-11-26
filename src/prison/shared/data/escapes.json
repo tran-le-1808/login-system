@@ -1,0 +1,135 @@
+{
+  "TUNNEL": {
+    "name": "Đường hầm từ xà lim",
+    "short": "đào hầm",
+    "exit": "exit_sw",
+    "requirements": [
+      "Dụng cụ đào (bậc 4, thông minh ≥ 35)",
+      "Thanh chống, chỗ đổ đất",
+      "Hình nộm khi đào ban đêm"
+    ],
+    "steps": [
+      "Chế Dụng cụ đào; chọn xà lim khu A (A-1 sát tường Tây)",
+      "Mỗi đêm đặt hình nộm rồi đào từng đoạn; chống hầm để không sập",
+      "Đổ đất xuống bồn cầu; che miệng hầm khi trời sáng",
+      "Hầm thông (12 đoạn) ra bụi cây ngoài tường Tây",
+      "Chui hầm, chạy tới ô thoát Tây-Nam"
+    ],
+    "risks": "Hầm sập khi thiếu thanh chống; khám phòng thấy miệng hầm hở; hình nộm bị lộ",
+    "time": "3–6 ngày game"
+  },
+  "VENT": {
+    "name": "Ống thông gió từ thư viện",
+    "short": "chui ống thông gió",
+    "exit": "exit_truck",
+    "requirements": [
+      "Dụng cụ cậy (Dao mài bậc 2) hoặc Tua vít",
+      "Thông minh ≥ 25–35",
+      "Thể lực"
+    ],
+    "steps": [
+      "Vào phòng nhỏ trong thư viện (vắng người ban đêm)",
+      "Cậy lưới thông gió, chui vào ống",
+      "Bò dọc ống về hướng Đông tới kho",
+      "Hạ xuống kho, đi sát chân tường để tránh camera C5",
+      "Ra sân xe tải: lẻn lên xe hàng (14:00–14:20) hoặc qua cổng lúc cổng mở"
+    ],
+    "risks": "Camera C5; cai ngục tuyến sân đi qua kho; tiếng cậy lưới",
+    "time": "1–2 đêm"
+  },
+  "GATE": {
+    "name": "Cải trang cai ngục + thẻ",
+    "short": "giả dạng cai ngục qua cổng",
+    "exit": "exit_truck",
+    "requirements": [
+      "Áo + quần cai ngục",
+      "Thẻ cai ngục (thật hoặc giả bậc 4)",
+      "Đủ sức hạ một cai ngục"
+    ],
+    "steps": [
+      "Dụ một cai ngục tới góc không camera, hạ gục",
+      "Lục soát lấy áo, quần, thẻ; mặc vào",
+      "Đi hành lang → xưởng → kho, tránh để cai ngục khác nhìn gần",
+      "Qua cổng xe tải bằng thẻ",
+      "Chạy tới ô thoát ngoài cổng"
+    ],
+    "risks": "Đồng nghiệp hỏi đáp; đồ rách bẩn dễ lộ; cai ngục ngất bị phát hiện",
+    "time": "1 ngày game"
+  },
+  "LAUNDRY": {
+    "name": "Xe giặt",
+    "short": "trốn theo xe giặt",
+    "exit": "exit_e",
+    "requirements": [
+      "Vào xe giặt trước 10:00",
+      "Nhanh nhẹn để lên xe nhanh",
+      "Hình nộm nếu vào từ đêm"
+    ],
+    "steps": [
+      "Vào phòng giặt lúc vắng cai ngục",
+      "Chui vào xe giặt",
+      "Nằm yên tới 10:00 khi xe ra cổng (có thể bị kiểm tra xe)",
+      "Nhảy khỏi xe ngoài cổng",
+      "Chạy tới ô thoát phía Đông"
+    ],
+    "risks": "Bị kiểm tra xe; bị thấy lúc trèo lên xe",
+    "time": "vài giờ game"
+  },
+  "FENCE": {
+    "name": "Cắt điện + vượt rào",
+    "short": "cắt điện, vượt hàng rào",
+    "exit": "exit_s",
+    "requirements": [
+      "Thiết bị phá điện (bậc 5)",
+      "Kìm cắt rào (bậc 4) hoặc Dây leo cao (bậc 5)",
+      "Thể lực tối đa"
+    ],
+    "steps": [
+      "Vào phòng điện cạnh kho, gắn thiết bị: mất điện 90 giây (camera + đèn pha tắt)",
+      "Chạy ra sân, cắt hàng rào trong (hoặc buộc dây trèo)",
+      "Vượt vành đai, cắt hàng rào ngoài",
+      "Né tháp canh (tối chỉ nhìn được 4 ô)",
+      "Chạy vòng ra ô thoát Nam hoặc Đông"
+    ],
+    "risks": "90 giây rất ngắn; tháp canh; mất điện bị thấy sẽ báo động",
+    "time": "chuẩn bị nhiều ngày, thực hiện 1 đêm"
+  },
+  "WALL": {
+    "name": "Đục tường ra ngoài",
+    "short": "đục thủng tường ngoài",
+    "exit": "exit_sw",
+    "requirements": [
+      "Cuốc chim cải tiến (tường ngoài cứng cấp 3)",
+      "Ảnh treo tường che lỗ",
+      "Hình nộm khi đục ban đêm"
+    ],
+    "steps": [
+      "Chế Cuốc chim cải tiến; chọn xà lim sát tường ngoài (A-1 phía Tây) hoặc đục vách nội bộ sang đó",
+      "Đêm đặt hình nộm, đục từng ô tường; ban ngày treo ảnh che lỗ",
+      "Đục thủng tường ngoài (lỗ mở ra bãi đất ngoài)",
+      "Bắt đầu đào tẩu, chui qua lỗ",
+      "Chạy tới ô thoát Tây-Nam"
+    ],
+    "risks": "Lỗ chưa che bị cai ngục thấy trong 3 ô (lấp lại); khám phòng lật ảnh; tiếng đục ban đêm",
+    "time": "1–3 ngày game"
+  },
+  "TRUCK": {
+    "name": "Cổng xe tải bằng chìa / thẻ",
+    "short": "qua cổng xe tải bằng chìa kho",
+    "exit": "exit_truck",
+    "requirements": [
+      "Chìa kho giả (khuôn chìa) hoặc Thẻ cai ngục",
+      "Biết giờ xe hàng (cổng mở khi xe tới)",
+      "Né camera kho"
+    ],
+    "steps": [
+      "Lấy / chế Chìa kho giả hoặc trộm Thẻ cai ngục",
+      "Giờ làm việc vào xưởng, mở cửa sau xưởng sang kho bằng chìa",
+      "Chờ trong kho tới giờ xe hàng, né camera",
+      "Ra sân xe tải khi cổng mở",
+      "Chạy qua cổng tới ô thoát sau cổng"
+    ],
+    "risks": "Camera cổng và camera kho; cai ngục tuyến sân; dấu vết mở cửa kho bị phát hiện sáng hôm sau",
+    "time": "1–2 ngày game"
+  }
+}

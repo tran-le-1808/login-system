@@ -52,7 +52,7 @@ export function resolveNine(
     extra: Partial<RackState> = {},
   ): ShotVerdict => {
     let balls = res.final;
-    if (nineIn || nineOff) balls = respot(balls, 9);
+    if (nineIn || nineOff) balls = respot(balls, 9, rack.size);
     const fouls: [number, number] = [...rack.fouls];
     fouls[shooter] += 1;
     if (fouls[shooter] >= 3) {
@@ -90,7 +90,7 @@ export function resolveNine(
       rack: {
         ...base,
         ...extra,
-        balls: ensureCue(balls, false),
+        balls: ensureCue(balls, false, rack.size),
         fouls,
         turn: opp,
         ballInHand: 'table',
@@ -172,7 +172,8 @@ export function resolveNine(
         },
       );
     // Bi vào khi push out không tính (vẫn nằm dưới lỗ), riêng bi 9 được đặt lại
-    const balls = nineIn || nineOff ? respot(res.final, 9) : res.final;
+    const balls =
+      nineIn || nineOff ? respot(res.final, 9, rack.size) : res.final;
     messages.push(
       msg(
         'info',

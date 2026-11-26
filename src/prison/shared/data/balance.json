@@ -1,0 +1,353 @@
+{
+  "net": {
+    "tickRate": 20,
+    "snapshotRate": 10,
+    "aiRate": 10,
+    "keyframeSeconds": 5,
+    "inputMaxPerSecond": 30,
+    "inputQueueMax": 20,
+    "maxInputsPerTick": 3,
+    "actionMaxPerSecond": 12,
+    "interpolationDelayMs": 150
+  },
+  "clock": {
+    "gameMinutesPerSecond": 1,
+    "singleSpeeds": [
+      1,
+      2,
+      4
+    ],
+    "sleepSpeedMultiplier": 4,
+    "solitarySpeedMultiplier": 12
+  },
+  "player": {
+    "radius": 0.25,
+    "walkSpeed": 4,
+    "sprintSpeed": 6.4,
+    "sprintDrain": 1,
+    "healthRegen": 0.5,
+    "maxEnergy": 100,
+    "maxHealth": 100,
+    "inventorySlots": 6,
+    "startMoney": 20,
+    "expPerLevel": 100,
+    "stepSeconds": 0.25
+  },
+  "needs": {
+    "hungerPerGameMinute": 0.07,
+    "slowThreshold": 75,
+    "slowMultiplier": 0.85,
+    "criticalThreshold": 95,
+    "criticalHealthDrainPerSecond": 0.5,
+    "foodHunger": 45
+  },
+  "skills": {
+    "craftGain": 4,
+    "dexterityGain": 2,
+    "fitnessPerSprintSecond": 0.03,
+    "socialGain": 2,
+    "max": 100
+  },
+  "reputation": {
+    "start": 50,
+    "violationGuardLoss": 4,
+    "penaltyGuardLoss": 8,
+    "snitchedLoss": 3,
+    "tradeInmateGain": 2
+  },
+  "heat": {
+    "personalPerSecond": 32,
+    "teamPerSecond": 6,
+    "personalDecay": 2.5,
+    "teamDecay": 0.35,
+    "chaseThreshold": 60,
+    "lockdownThreshold": 100,
+    "lockdownSeconds": 90,
+    "teamHeatAfterLockdown": 45,
+    "heatAfterKnockout": 25,
+    "warningHeat": 10,
+    "penaltyHeat": 25,
+    "cameraPersonalPerSecond": 15,
+    "cameraTeamPerSecond": 8
+  },
+  "violations": {
+    "penaltyFine": 10,
+    "seriousAfterCount": 3
+  },
+  "rescue": {
+    "reviveSeconds": 5,
+    "knockoutWindowSeconds": 45,
+    "knockoutWindowSoloSeconds": 3,
+    "rescueSeconds": 6,
+    "reviveHealthPct": 0.3,
+    "reviveEnergyPct": 0.25,
+    "invulnerableSeconds": 3,
+    "releasedHealthPct": 0.5,
+    "solitaryMultiSeconds": {
+      "NORMAL": 120,
+      "HARD": 180,
+      "HARDCORE": 300
+    },
+    "solitarySingleGameHours": {
+      "NORMAL": 24,
+      "HARD": 48,
+      "HARDCORE": 72
+    },
+    "cashKeptOnCapture": 30
+  },
+  "interaction": {
+    "range": 1.6,
+    "openVentSeconds": 5,
+    "attachRopeSeconds": 6,
+    "hideSeconds": 1.5,
+    "flushSeconds": 1,
+    "cameraPanelSeconds": 6,
+    "tradeRange": 4,
+    "tradeTimeoutSeconds": 30,
+    "channelMoveTolerance": 0.25,
+    "containerStock": 3,
+    "containerSlots": 9,
+    "teamStorageMaxSlots": 12,
+    "npcRange": 1.8,
+    "cutFenceSeconds": 6,
+    "blackoutSeconds": 5
+  },
+  "combat": {
+    "fists": {
+      "damage": 8,
+      "range": 1.0,
+      "cooldown": 0.45
+    },
+    "arcDeg": 110,
+    "fitnessDamagePer100": 0.25,
+    "variance": 0.1,
+    "sneakMultiplier": 1.5,
+    "knockback": 0.45,
+    "hitStunSeconds": 0.25,
+    "guardHealth": 60,
+    "guardDownSeconds": 90,
+    "inmateHealth": 40,
+    "inmateDownSeconds": 30,
+    "inmatePurse": [
+      4,
+      12
+    ],
+    "inmateRepLoss": 8,
+    "inmateHitRepLoss": 1,
+    "recoverSeconds": 20,
+    "fightWindowSeconds": 4,
+    "assaultTeamHeat": 12,
+    "koTeamHeat": 15,
+    "ai": {
+      "reactDelay": [
+        0.3,
+        0.8
+      ],
+      "fleeHealthPct": 0.3,
+      "guardFleeRange": 6,
+      "allyJoinRange": 7,
+      "maxParticipants": 3,
+      "retreatSeconds": 6,
+      "lowRepAttack": 25,
+      "proactiveRange": 5,
+      "proactiveCooldown": 45,
+      "damage": 6,
+      "cooldown": 1.2,
+      "reach": 1.0,
+      "giveUpRange": 12,
+      "reportGuardRep": 5,
+      "reportInmateRep": 8,
+      "groupRepLoss": 6
+    }
+  },
+  "nightCheck": {
+    "teamHeat": 10
+  },
+  "tunnel": {
+    "segments": 12,
+    "digSeconds": 7,
+    "supportEvery": 3,
+    "collapseChance": 0.45,
+    "collapseDamage": 25,
+    "coverSeconds": 2,
+    "supportSeconds": 3,
+    "noiseRadius": 2.6,
+    "foundCoveredChance": 0.25
+  },
+  "disguise": {
+    "recognizeRange": 2.5
+  },
+  "cameras": {
+    "disabledSeconds": 120
+  },
+  "inmates": {
+    "speed": 2.1,
+    "snitchRange": 5,
+    "snitchDelay": 2,
+    "snitchHeat": 25,
+    "wanderSeconds": [
+      4,
+      9
+    ]
+  },
+  "escape": {
+    "pointRadius": 2.2,
+    "tunnelRadius": 1.1,
+    "failedResetSeconds": 10
+  },
+  "assist": {
+    "intelSeconds": 8,
+    "intelCooldownSeconds": 45
+  },
+  "fighter": {
+    "breakFreeCooldownSeconds": 120
+  },
+  "reconnect": {
+    "graceSeconds": 120,
+    "lobbyGraceSeconds": 20
+  },
+  "persistence": {
+    "checkpointSeconds": 30,
+    "eventFlushSeconds": 2
+  },
+  "idempotency": {
+    "keepPerPlayer": 64
+  },
+  "journal": {
+    "maxEntries": 300
+  },
+  "wanted": {
+    "redetectCooldownMinutes": 10,
+    "levelUpOutsideMinutes": 60,
+    "decayMinutes": 20,
+    "alertRadius": [
+      12,
+      25,
+      99
+    ],
+    "lockdownLevel": 2,
+    "teamHeatPerLevel": 10
+  },
+  "decoy": {
+    "baseRealism": 35,
+    "perCraftingPoint": 0.4,
+    "mechanicBonus": 15,
+    "glanceFactor": 0.03,
+    "darkFactor": 0.6,
+    "closeLookBase": 0.1,
+    "meterPerGlance": 6,
+    "meterDecayPerHour": 10,
+    "rollcallAnswerRange": 3
+  },
+  "activities": {
+    "showerSeconds": 4,
+    "noShowerGuardRep": 5,
+    "noShowerInmateRep": 3,
+    "absentWagePenalty": 9
+  },
+  "loot": {
+    "openSeconds": 3,
+    "itemSeconds": 0.5,
+    "clothingSeconds": 2,
+    "watchedHeat": 35,
+    "guardSeenAlarmHeat": 20
+  },
+  "stamina": {
+    "staminaMax": 100,
+    "gymStaminaCost": 4,
+    "lowThreshold": 20,
+    "lowSpeedMultiplier": 0.85,
+    "digCost": 2,
+    "climbCost": 6,
+    "showerRestore": 30,
+    "shelfStaminaCost": 0,
+    "bedSleepStaminaPerSecond": 4,
+    "craftStaminaCost": 1
+  },
+  "intelligence": {
+    "intelligenceStart": 20,
+    "intelligenceMax": 50,
+    "intelligenceMin": 0,
+    "intelligenceDailyDecay": 2,
+    "shelfReadSeconds": 5,
+    "shelfCooldownMinutes": 0,
+    "alwaysOpen": true
+  },
+  "crafting": {
+    "baseSuccess": 0.7,
+    "maxSuccess": 0.95,
+    "successPerSurplusPoint": 0.025,
+    "skillBonusPer100": 0.1,
+    "roleBonus": 0.05,
+    "failLossFraction": 0.5,
+    "tierIntelligence": [
+      0,
+      15,
+      25,
+      35,
+      45
+    ],
+    "witnessSeconds": 1.0
+  },
+  "food": {
+    "defaultCooldownSeconds": 30
+  },
+  "solitary": {
+    "soloMode": true,
+    "soloWakeSeconds": 4
+  },
+  "rollcall": {
+    "warningMinutes": 1,
+    "periods": [
+      "ROLL_CALL",
+      "ROLL_CALL_2"
+    ]
+  },
+  "knockout": {
+    "knockoutSoloMinutes": 30,
+    "knockoutStrengthLoss": 1,
+    "knockoutAgilityLoss": 1,
+    "knockoutHpRecoverRatio": 0.5,
+    "knockoutStaminaRestore": 100
+  },
+  "camera": {
+    "baseTilePx": 16,
+    "zoomStepHeight": 270,
+    "cameraCenterOffsetY": 0
+  },
+  "actionTimeScale": 0.5,
+  "sleep": {
+    "autoWakeAt8": true,
+    "toggleDebounceSeconds": 0.3,
+    "bedOwnerReaction": true,
+    "ownerWarnCooldownSeconds": 45,
+    "ownerWarningsBeforeGrudge": 2
+  },
+  "shower": {
+    "staminaPerSecond": 4,
+    "showerRemovesOutfit": true,
+    "hygienePenaltyEnabled": false
+  },
+  "floor": {
+    "_doc": "Đồ trên mặt đất: nhặt / vứt / ném; cai ngục dọn đồ cấm; tù nhân nhặt đồ; tự biến mất.",
+    "pickupRadiusTiles": 1.6,
+    "pickupAllHoldMs": 450,
+    "worldItemDespawnDays": 2,
+    "dropNoiseRadiusTiles": 2.5,
+    "throwRangeTiles": 3.5,
+    "throwNoiseRadiusTiles": 4,
+    "guardPickupRange": 1.2,
+    "guardContrabandHeat": 5,
+    "rollcallSweepContraband": true,
+    "inmatePickupRange": 1.0,
+    "inmatePickupChance": {
+      "greedy": 0.25,
+      "calm": 0.04,
+      "snitch": 0.02,
+      "hothead": 0.06
+    },
+    "inmateBagSlots": 6,
+    "autoPickupMoney": true,
+    "weightEnabled": false
+  }
+}

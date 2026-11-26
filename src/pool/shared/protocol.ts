@@ -140,7 +140,7 @@ export function validateShotInput(
   const tipY = x.tipY as number;
   const elevation = x.elevation as number;
   const aimAngle = x.aimAngle as number;
-  // Lực 0..1 (≤ maxCueSpeed = 12 m/s), điểm chạm trong vòng tròn đơn vị (≤ maxTipOffset·R), góc cơ ≤ 80°
+  // Lực 0..1 (≤ maxCueSpeed = 9 m/s), điểm chạm trong vòng tròn đơn vị (≤ maxTipOffset·R), góc cơ ≤ 80°
   if (power < 0 || power > 1) return fail('OUT_OF_RANGE');
   if (tipX * tipX + tipY * tipY > 1 + 1e-9) return fail('OUT_OF_RANGE');
   if (elevation < 0 || elevation > c.maxElevation) return fail('OUT_OF_RANGE');

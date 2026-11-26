@@ -1,0 +1,6 @@
+{
+  "_doc": "Bị đánh ngất. Chơi một mình: bất tỉnh 30 phút game rồi tỉnh dậy ở phòng y tế. Cai ngục bắt -> vẫn tịch thu đồ cấm.",
+  "confiscateOnGuardKO": true,
+  "medicalExcusesRollCall": true,
+  "safeGameMinutes": 2
+}

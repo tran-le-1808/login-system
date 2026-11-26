@@ -1,0 +1,13 @@
+{
+  "_doc": "Vật che dấu vết đào. Chưa che: cai ngục thấy ngay trong 3 ô / khi khám phòng. Đã che: chỉ lộ khi khám phòng theo xác suất.",
+  "wall_picture": {
+    "type": "wall",
+    "coversTileState": "hole",
+    "searchDetectionChance": 0.25
+  },
+  "floor_rug": {
+    "type": "floor",
+    "coversTileState": "tunnelEntrance",
+    "searchDetectionChance": 0.2
+  }
+}

@@ -1,5 +1,5 @@
 import type { BallSpot, SimEvent } from './shared/physics/types';
-import type { PocketPreset } from './shared/physics/config';
+import type { PocketPreset, TableSize } from './shared/physics/config';
 import type { MatchState } from './shared/rules/engine';
 import type {
   CallShot,
@@ -19,6 +19,8 @@ export interface PoolRoomSettings {
   raceTo: number;
   breakRule: 'alternate' | 'winner';
   pocketPreset: PocketPreset;
+  /** Cỡ bàn 7 / 8 / 9 feet (xếp hạng: luôn 9 feet) */
+  tableSize: TableSize;
   /** Bật đồng hồ đánh (30 s / 60 s) */
   shotClock: boolean;
   /** Cho phép đường dự đoán quỹ đạo đầy đủ (xếp hạng: luôn tắt) */

@@ -1,0 +1,9 @@
+{
+  "_doc": "Cai ngục bênh người bị đánh: thấy tù nhân gây hấn thì can thiệp tù nhân đó.",
+  "guardInterveneOnAggression": true,
+  "selfDefenseWindowSeconds": 5,
+  "aggressorPunishment": {
+    "knockoutSeconds": 60,
+    "groupRepLoss": 0
+  }
+}

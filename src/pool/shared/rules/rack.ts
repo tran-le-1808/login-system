@@ -1,7 +1,7 @@
 // ⚠️ BẢN SAO TỰ ĐỘNG — KHÔNG SỬA Ở ĐÂY. Nguồn: chat-zone/app/games/pool/_lib (npm run pool:sync-shared)
 /* eslint-disable */
-import { POOL_PHYSICS } from '../physics/config';
-import { POOL_TABLE } from '../physics/table';
+import { POOL_PHYSICS, type TableSize } from '../physics/config';
+import { tableOfSize } from '../physics/table';
 import type { BallSpot } from '../physics/types';
 import type { GameType } from './types';
 
@@ -38,11 +38,17 @@ const SP = 2 * R + GAP;
 const ROW_DX = SP * (Math.sqrt(3) / 2); // cos 30° (xác định)
 
 /** Toạ độ ô (hàng i, vị trí j) với đỉnh khung ở foot spot, khung mở về phía băng cuối (+x) */
-function slot(i: number, j: number, rowLen: number, rand: () => number) {
+function slot(
+  i: number,
+  j: number,
+  rowLen: number,
+  rand: () => number,
+  size?: TableSize,
+) {
   const jx = i === 0 ? 0 : (rand() * 2 - 1) * JITTER;
   const jy = i === 0 ? 0 : (rand() * 2 - 1) * JITTER;
   return {
-    x: POOL_TABLE.footSpot.x + i * ROW_DX + jx,
+    x: tableOfSize(size).footSpot.x + i * ROW_DX + jx,
     y: (j - (rowLen - 1) / 2) * SP + jy,
   };
 }
@@ -54,7 +60,7 @@ export const STRIPES = [9, 10, 11, 12, 13, 14, 15];
  * 8 bi (WPA): tam giác 15 bi, đỉnh tại foot spot, bi 8 giữa hàng 3,
  * 2 góc cuối: 1 bi trơn + 1 bi sọc, còn lại ngẫu nhiên.
  */
-export function rackEight(seed: number): BallSpot[] {
+export function rackEight(seed: number, size?: TableSize): BallSpot[] {
   const rand = rng(seed);
   const solid = SOLIDS[Math.floor(rand() * 7)];
   const stripe = STRIPES[Math.floor(rand() * 7)];
@@ -71,14 +77,14 @@ export function rackEight(seed: number): BallSpot[] {
       else if (i === 4 && j === 0) n = left;
       else if (i === 4 && j === 4) n = right;
       else n = rest.pop()!;
-      out.push({ n, ...slot(i, j, i + 1, rand) });
+      out.push({ n, ...slot(i, j, i + 1, rand, size) });
     }
   }
   return out;
 }
 
 /** 9 bi (WPA): hình thoi 1-2-3-2-1, bi 1 ở đỉnh (foot spot), bi 9 chính giữa, còn lại ngẫu nhiên */
-export function rackNine(seed: number): BallSpot[] {
+export function rackNine(seed: number, size?: TableSize): BallSpot[] {
   const rand = rng(seed);
   const rest = shuffle([2, 3, 4, 5, 6, 7, 8], rand);
   const rows = [1, 2, 3, 2, 1];
@@ -89,14 +95,18 @@ export function rackNine(seed: number): BallSpot[] {
       if (i === 0) n = 1;
       else if (i === 2 && j === 1) n = 9;
       else n = rest.pop()!;
-      out.push({ n, ...slot(i, j, len, rand) });
+      out.push({ n, ...slot(i, j, len, rand, size) });
     }
   });
   return out;
 }
 
-export function rackFor(type: GameType, seed: number): BallSpot[] {
-  return type === 'eight' ? rackEight(seed) : rackNine(seed);
+export function rackFor(
+  type: GameType,
+  seed: number,
+  size?: TableSize,
+): BallSpot[] {
+  return type === 'eight' ? rackEight(seed, size) : rackNine(seed, size);
 }
 
 const freeAt = (balls: BallSpot[], x: number, y: number, ignore = -1) =>
@@ -108,10 +118,15 @@ const freeAt = (balls: BallSpot[], x: number, y: number, ignore = -1) =>
  * Đặt lại bi (spotting): lên foot spot; nếu bị chiếm thì trên đường dọc từ foot spot về
  * băng cuối, sát bi chắn nhất có thể; hết chỗ thì đặt phía trước foot spot.
  */
-export function spotBall(balls: BallSpot[], n: number): BallSpot[] {
+export function spotBall(
+  balls: BallSpot[],
+  n: number,
+  size?: TableSize,
+): BallSpot[] {
+  const T = tableOfSize(size);
   const rest = balls.filter((b) => b.n !== n);
-  const { x: fx } = POOL_TABLE.footSpot;
-  const maxX = POOL_TABLE.L / 2 - R - 0.001;
+  const { x: fx } = T.footSpot;
+  const maxX = T.L / 2 - R - 0.001;
   if (freeAt(rest, fx, 0)) return [...rest, { n, x: fx, y: 0 }];
   // Tìm vị trí trống đầu tiên từ foot spot đi về băng cuối, rồi về phía đầu bàn
   const step = 0.0005;
@@ -130,20 +145,28 @@ export function isValidCuePlacement(
   x: number,
   y: number,
   kitchen: boolean,
+  size?: TableSize,
 ): boolean {
-  const hx = POOL_TABLE.L / 2 - R;
-  const hy = POOL_TABLE.W / 2 - R;
+  const T = tableOfSize(size);
+  const hx = T.L / 2 - R;
+  const hy = T.W / 2 - R;
   if (Math.abs(x) > hx || Math.abs(y) > hy) return false;
-  if (kitchen && x > POOL_TABLE.headStringX) return false;
+  if (kitchen && x > T.headStringX) return false;
   return freeAt(balls, x, y, 0);
 }
 
 /** Kẹp vị trí bi cái về vùng hợp lệ gần nhất (để kéo thả mượt) */
-export function clampCuePlacement(x: number, y: number, kitchen: boolean) {
-  const hx = POOL_TABLE.L / 2 - R;
-  const hy = POOL_TABLE.W / 2 - R;
+export function clampCuePlacement(
+  x: number,
+  y: number,
+  kitchen: boolean,
+  size?: TableSize,
+) {
+  const T = tableOfSize(size);
+  const hx = T.L / 2 - R;
+  const hy = T.W / 2 - R;
   return {
-    x: Math.max(-hx, Math.min(kitchen ? POOL_TABLE.headStringX : hx, x)),
+    x: Math.max(-hx, Math.min(kitchen ? T.headStringX : hx, x)),
     y: Math.max(-hy, Math.min(hy, y)),
   };
 }
@@ -152,16 +175,17 @@ export function clampCuePlacement(x: number, y: number, kitchen: boolean) {
 export function defaultCueSpot(
   balls: BallSpot[],
   kitchen: boolean,
+  size?: TableSize,
 ): { x: number; y: number } {
   const others = balls.filter((b) => b.n !== 0);
-  const { x: hx } = POOL_TABLE.headSpot;
+  const { x: hx } = tableOfSize(size).headSpot;
   const cands: [number, number][] = [[hx, 0]];
   for (let k = 1; k < 40; k++) {
     const d = k * 0.03;
     cands.push([hx, d], [hx, -d], [hx - d, 0], [kitchen ? hx - d : hx + d, 0]);
   }
   for (const [x, y] of cands)
-    if (isValidCuePlacement(others, x, y, kitchen)) return { x, y };
+    if (isValidCuePlacement(others, x, y, kitchen, size)) return { x, y };
   return { x: hx, y: 0 };
 }
 

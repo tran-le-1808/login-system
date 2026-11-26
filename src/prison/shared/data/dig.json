@@ -1,0 +1,17 @@
+{
+  "_doc": "Đào tường / đào hầm tự do (thời gian × actionTimeScale).",
+  "wallSeconds": 8,
+  "floorSeconds": 8,
+  "tunnelSeconds": 6,
+  "staminaPerWallTile": 3,
+  "staminaPerFloorTile": 2,
+  "staminaPerTunnelTile": 2,
+  "lowStaminaThreshold": 20,
+  "collapseChanceLowStamina": 0.35,
+  "collapseDamage": 15,
+  "tunnelLengthMax": 60,
+  "dirtDisposalEnabled": false,
+  "guardSpotRange": 3,
+  "holeFoundConsequence": "fill",
+  "foundHeat": 30
+}

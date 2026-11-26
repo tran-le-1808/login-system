@@ -21,13 +21,20 @@ describe('Hàng chờ ghép trận', () => {
     expect(q.isQueued('a')).toBe(false);
     expect(q.pendingFor('a')?.id).toBe(found[0].id);
   });
-  it('rating chênh nhiều: chờ tới khi khoảng tìm nới đủ', () => {
+  it('không cần cùng trình độ: rating chênh nhiều vẫn ghép ngay', () => {
     const q = new MatchmakingQueue();
     q.join(e('a', 1000), null);
-    q.join(e('b', 1120), null);
-    expect(q.tick(1000)).toHaveLength(0);
-    expect(q.tick(11_000)).toHaveLength(0); // 100 < 120
-    expect(q.tick(21_000)).toHaveLength(1); // 150 >= 120
+    q.join(e('b', 2400), null);
+    expect(q.tick(1000)).toHaveLength(1);
+  });
+  it('ghép theo thứ tự vào hàng chờ (người chờ lâu nhất trước), không chọn theo rating', () => {
+    const q = new MatchmakingQueue();
+    q.join(e('a', 1000, 0), null);
+    q.join(e('far', 1900, 1000), null);
+    q.join(e('near', 1005, 2000), null);
+    const [m] = q.tick(3000);
+    expect(m.players.map((p) => p.userId)).toEqual(['a', 'far']);
+    expect(q.queuedIds()).toEqual(['near']);
   });
   it('khác chế độ / luật thì không ghép', () => {
     const q = new MatchmakingQueue();

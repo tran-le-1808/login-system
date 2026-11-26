@@ -1,0 +1,32 @@
+{
+  "_doc": "Ca trực: ca ngày 6 cai ngục (3 tuyến × 2), ca đêm 4 cai ngục đi hành lang kiểm tra xà lim, 2 người nghỉ trong văn phòng. Tháp canh có cai ngục cố định. stagger: người thứ k cùng tuyến xuất phát lệch k × stagger điểm tuần tra.",
+  "dayStart": "08:00",
+  "nightStart": "21:00",
+  "day": [
+    "cells",
+    "cells",
+    "work",
+    "work",
+    "yard",
+    "yard"
+  ],
+  "night": [
+    "night_a",
+    "night_a",
+    "night_b",
+    "night_b",
+    "office",
+    "office"
+  ],
+  "pauseChance": 0.25,
+  "pauseSeconds": [
+    5,
+    15
+  ],
+  "tower": {
+    "visionRange": 10,
+    "blackoutVisionRange": 4,
+    "fovDeg": 50
+  },
+  "stagger": 1
+}

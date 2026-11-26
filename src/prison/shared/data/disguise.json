@@ -1,0 +1,34 @@
+{
+  "_doc": "Cải trang cai ngục: mặc bộ đồ cai ngục là thành cai ngục — cai ngục / camera / tháp canh không bao giờ nhận ra danh tính. Chỉ mất cải trang (tạm thời) khi bị thấy phạm tội.",
+  "guardsNeverDetectIdentity": true,
+  "bypassRollCall": true,
+  "revokedOnCrimeSeen": true,
+  "revokeSeconds": 300,
+  "ownerRecognizeRange": 3,
+  "outfitRequiredOutsideCell": true,
+  "undressedFreeZones": [
+    "cell_*",
+    "shower",
+    "infirmary",
+    "solitary_*"
+  ],
+  "undressedHeat": 8,
+  "inmateCommentRange": 3,
+  "inmateCommentCooldownSeconds": 60,
+  "inmateComments": [
+    "Ê, mặc đồ vào đi!",
+    "Trời đất, ai lột đồ ông vậy?",
+    "Lạnh không ông bạn?",
+    "Ha ha, đồ lót đẹp đấy!"
+  ],
+  "workerOutfit": {
+    "zones": [
+      "workshop",
+      "laundry",
+      "storage",
+      "power",
+      "truck_gate"
+    ],
+    "onlyDuringWorkShift": true
+  }
+}

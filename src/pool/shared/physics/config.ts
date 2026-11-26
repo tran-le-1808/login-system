@@ -110,27 +110,29 @@ export const POOL_PHYSICS: PoolConfig = {
   gravity: 9.81,
 
   muSlide: 0.2,
-  muRoll: 0.01,
+  muRoll: 0.0075,
   muSpin: 0.044,
 
   ballRestitution: 0.95,
   ballFriction: 0.06,
 
-  // Hiệu chỉnh theo dữ liệu thật (test calibration.test.ts): lag ~1.5 m/s, 3 m/s lăn ~4 chiều bàn,
-  // bi lăn vào băng 45° bật ra ngắn hơn 45° một chút
-  cushionRestitution: 0.86,
-  cushionRestitutionSlope: 0.025,
-  cushionRestitutionMin: 0.62,
-  cushionRestitutionMax: 0.9,
+  // Hiệu chỉnh theo dữ liệu thật (test calibration.test.ts): lag ~1.4–1.5 m/s, 3 m/s lăn ~3–4 chiều bàn,
+  // bi lăn vào băng 45° bật ra ngắn hơn 45° vài độ, bi lăn thẳng vào băng luôn bật ra CHẬM hơn lúc vào
+  // (trước đây e = 0.86 + phục hồi tiếp tuyến 0.6 làm bi chậm bật ra nhanh bằng lúc vào — trông "nảy")
+  cushionRestitution: 0.77,
+  cushionRestitutionSlope: 0.03,
+  cushionRestitutionMin: 0.53,
+  cushionRestitutionMax: 0.83,
   cushionFriction: 0.26,
-  cushionTangentialRestitution: 0.6,
+  cushionTangentialRestitution: 0.2,
   cushionHeight: 0.0363,
 
   cueTipRestitution: 0.75,
   cueMass: 0.54,
   cueEndMassRatio: 0.1,
-  minCueSpeed: 0.5,
-  maxCueSpeed: 12,
+  // Lực đánh = 3/4 bản cũ (0.5 / 12 m/s) ở mọi mức kéo cơ
+  minCueSpeed: 0.375,
+  maxCueSpeed: 9,
   maxTipOffset: 0.6,
   miscueOffset: 0.5,
   strikeTableFriction: 0.3,
@@ -219,6 +221,41 @@ export const POCKET_PRESETS: Record<
   },
 };
 
+// ===================== CỠ BÀN =====================
+
+export type TableSize = '7ft' | '8ft' | '9ft';
+export const TABLE_SIZE_ORDER: TableSize[] = ['7ft', '8ft', '9ft'];
+
+/**
+ * Cỡ bàn: "7/8/9 feet" là cỡ danh nghĩa (≈ 213 / 244 / 274 cm). Vật lý dùng MẶT CHƠI
+ * tính tới mũi băng theo WPA (tỉ lệ 2:1): 78×39, 88×44, 100×50 inch.
+ */
+export const TABLE_SIZES: Record<
+  TableSize,
+  { label: string; length: number; width: number; note: string }
+> = {
+  '7ft': {
+    label: '7 feet',
+    length: 1.981,
+    width: 0.991,
+    note: 'Mặt chơi 198 × 99 cm — bàn gia đình, giải trí',
+  },
+  '8ft': {
+    label: '8 feet',
+    length: 2.235,
+    width: 1.118,
+    note: 'Mặt chơi 224 × 112 cm — phổ biến ở nhà / CLB',
+  },
+  '9ft': {
+    label: '9 feet',
+    length: 2.54,
+    width: 1.27,
+    note: 'Mặt chơi 254 × 127 cm — chuẩn thi đấu WPA',
+  },
+};
+export const isTableSize = (v: unknown): v is TableSize =>
+  v === '7ft' || v === '8ft' || v === '9ft';
+
 export function configForPreset(
   preset: PocketPreset,
   base: PoolConfig = POOL_PHYSICS,
@@ -229,5 +266,19 @@ export function configForPreset(
     pocketPreset: preset,
     cornerMouth: p.corner,
     sideMouth: p.side,
+  };
+}
+
+/** Cấu hình theo độ khó lỗ + cỡ bàn (mặc định 9 feet — giống trước đây) */
+export function configForTable(
+  preset: PocketPreset = 'wpa',
+  size: TableSize = '9ft',
+  base: PoolConfig = POOL_PHYSICS,
+): PoolConfig {
+  const t = TABLE_SIZES[size] ?? TABLE_SIZES['9ft'];
+  return {
+    ...configForPreset(preset, base),
+    tableLength: t.length,
+    tableWidth: t.width,
   };
 }
