@@ -16,6 +16,8 @@ import { BilliardModule } from './billiard/billiard.module';
 import { PoolModule } from './pool/pool.module';
 import { CaroModule } from './caro/caro.module';
 import { PrisonModule } from './prison/prison.module';
+import { XiangqiModule } from './xiangqi/xiangqi.module';
+import { ChessModule } from './chess/chess.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { PrisonModule } from './prison/prison.module';
     PoolModule,
     CaroModule,
     PrisonModule,
+    XiangqiModule,
+    ChessModule,
   ],
   controllers: [AppController],
   providers: [AppService],
