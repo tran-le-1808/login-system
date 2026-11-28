@@ -18,6 +18,10 @@ import { CaroModule } from './caro/caro.module';
 import { PrisonModule } from './prison/prison.module';
 import { XiangqiModule } from './xiangqi/xiangqi.module';
 import { ChessModule } from './chess/chess.module';
+import { TienLenModule } from './tienlen/tienlen.module';
+import { SacMauModule } from './sacmau/sacmau.module';
+import { MaSoiModule } from './masoi/masoi.module';
+import { VeDoanModule } from './vedoan/vedoan.module';
 
 @Module({
   imports: [
@@ -45,6 +49,10 @@ import { ChessModule } from './chess/chess.module';
     PrisonModule,
     XiangqiModule,
     ChessModule,
+    TienLenModule,
+    SacMauModule,
+    MaSoiModule,
+    VeDoanModule,
   ],
   controllers: [AppController],
   providers: [AppService],
